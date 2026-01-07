@@ -1,0 +1,76 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: "Circular-Std";
+}
+
+/* -----------------------------------
+ * Header
+ * ----------------------------------- */
+
+.timeline__header {
+  flex: 0 0 auto;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* -----------------------------------
+ * Body Layout
+ * ----------------------------------- */
+
+.timeline__body {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0; // allows proper scrolling
+}
+
+/* -----------------------------------
+ * Left Panel (Work Centers)
+ * ----------------------------------- */
+
+.timeline__left {
+  flex: 0 0 240px; // fixed width per design
+  border-right: 1px solid #e5e7eb;
+  background-color: #ffffff;
+}
+
+.timeline__work-center {
+  height: 56px; // MUST match row height
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  border-bottom: 1px solid #f3f4f6;
+
+  &:hover {
+    background-color: #f9fafb;
+  }
+}
+
+/* -----------------------------------
+ * Right Panel (Timeline Grid)
+ * ----------------------------------- */
+
+.timeline__right {
+  flex: 1 1 auto;
+  overflow: hidden; // grid manages scroll
+  position: relative;
+  background-color: #ffffff;
+}
+
+/* -----------------------------------
+ * Responsive considerations
+ * ----------------------------------- */
+
+@media (max-width: 768px) {
+  .timeline__left {
+    flex: 0 0 180px;
+  }
+
+  .timeline__work-center {
+    font-size: 13px;
+    padding: 0 12px;
+  }
+}

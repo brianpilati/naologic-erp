@@ -1,0 +1,51 @@
+<div class="timeline">
+  <!-- Header -->
+  app-timeline-header
+  <!-- <app-timeline-header
+    class="timeline__header"
+    [columns]="timelineService.columns()"
+    [zoomLevel]="timelineService.zoomLevel()"
+    (zoomChange)="onZoomChange($event)"
+  /> -->
+
+  <!-- Body -->
+  <div class="timeline__body">
+    <!-- Left: Work Centers (fixed) -->
+    <div class="timeline__left">
+      @for (center of workCenters(); track center.docId) {
+      <div class="timeline__work-center">
+        {{ center.data.name }}
+      </div>
+      }
+    </div>
+
+    <!-- Right: Timeline Grid (scrollable) -->
+    <div class="timeline__right">
+      app-timeline-grid
+      <!-- <app-timeline-grid
+        [columns]="timelineService.columns()"
+        (createAt)="onCreateAt($event.date, $event.workCenterId)"
+      >
+        @for (center of workCenters(); track center.docId) {
+          <app-work-center-row
+            [workCenter]="center"
+            [orders]="workOrdersForCenter(center)"
+            (edit)="onEdit($event)"
+            (delete)="onDelete($event)"
+          />
+        }
+      </app-timeline-grid>
+           -->
+    </div>
+  </div>
+
+  <!-- Slide-out Create/Edit Panel -->
+  @if (isPanelOpen()) { app-work-order-panel
+  <!-- <app-work-order-panel
+    [mode]="panelMode()"
+    [initialOrder]="selectedWorkOrder()"
+    (save)="onSave($event)"
+    (close)="onCancel()"
+  /> -->
+  }
+</div>
