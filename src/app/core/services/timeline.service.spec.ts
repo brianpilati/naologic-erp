@@ -5,12 +5,11 @@ import { TimelineService } from './timeline.service';
 describe('TimelineService', () => {
   let service: TimelineService;
 
-  const localDate = (y: number, m1: number, d: number) =>
-    new Date(y, m1 - 1, d);
+  const localDate = (y: number, m1: number, d: number) => new Date(y, m1 - 1, d);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TimelineService, provideZonelessChangeDetection()],
+      providers: [TimelineService, provideZonelessChangeDetection()]
     });
 
     service = TestBed.inject(TimelineService);
@@ -91,9 +90,7 @@ describe('TimelineService', () => {
     expect(first.widthPx).toBe(service.WEEK_WIDTH_PX);
 
     // Ensure week spans 7 days
-    const diff =
-      (first.endDate.getTime() - first.startDate.getTime()) /
-      (1000 * 60 * 60 * 24);
+    const diff = (first.endDate.getTime() - first.startDate.getTime()) / (1000 * 60 * 60 * 24);
 
     expect(diff).toBe(6);
   });

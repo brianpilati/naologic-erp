@@ -13,9 +13,9 @@
     <!-- Left: Work Centers (fixed) -->
     <div class="timeline__left">
       @for (center of workCenters(); track center.docId) {
-      <div class="timeline__work-center">
-        {{ center.data.name }}
-      </div>
+        <div class="timeline__work-center">
+          {{ center.data.name }}
+        </div>
       }
     </div>
 
@@ -40,8 +40,9 @@
   </div>
 
   <!-- Slide-out Create/Edit Panel -->
-  @if (isPanelOpen()) { app-work-order-panel
-  <!-- <app-work-order-panel
+  @if (isPanelOpen()) {
+    app-work-order-panel
+    <!-- <app-work-order-panel
     [mode]="panelMode()"
     [initialOrder]="selectedWorkOrder()"
     (save)="onSave($event)"

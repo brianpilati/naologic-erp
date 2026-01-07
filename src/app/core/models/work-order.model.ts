@@ -1,13 +1,13 @@
-import { WorkOrderStatusType } from "../types/work-order-status.type";
+import { WorkOrderStatusType } from '../types/work-order-status.type';
 
 export interface WorkOrderDocument {
   docId: string;
   docType: 'workOrder';
   data: {
     name: string;
-    workCenterId: string;           // References WorkCenterDocument.docId
+    workCenterId: string; // References WorkCenterDocument.docId
     status: WorkOrderStatusType;
-    startDate: string;              // ISO format (e.g., "2025-01-15")
-    endDate: string;                // ISO format
+    startDate: string; // ISO format (e.g., "2025-01-15")
+    endDate: string; // ISO format
   };
 }

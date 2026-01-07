@@ -15,12 +15,14 @@ You are tasked with building a Work Order Schedule Timeline component for a manu
 **What you're building:** An interactive timeline component that displays work orders across work centers with create/edit functionality.
 
 **Must implement:**
+
 - Timeline grid with Day/Week/Month zoom levels
 - Work order bars with status indicators
 - Create/Edit slide-out panel with form validation
 - Overlap detection (show error if work orders overlap on same work center)
 
 **Required deliverables:**
+
 1. Working Angular 17+ application
 2. Pixel-perfect implementation matching designs
 3. Sample data (work centers + work orders)
@@ -28,6 +30,7 @@ You are tasked with building a Work Order Schedule Timeline component for a manu
 5. GitHub repo with README
 
 **Bonus (optional):**
+
 - localStorage persistence
 - Automated test suite
 - Smooth animations/transitions
@@ -43,11 +46,11 @@ You are tasked with building a Work Order Schedule Timeline component for a manu
 **Font Family:** Circular Std
 
 ```html
-<link rel="stylesheet" href="https://naologic-com-assets.naologic.com/fonts/circular-std/circular-std.css">
+<link rel="stylesheet" href="https://naologic-com-assets.naologic.com/fonts/circular-std/circular-std.css" />
 ```
 
 ```scss
-font-family: "Circular-Std";
+font-family: 'Circular-Std';
 ```
 
 You have access to the Sketch file for precise measurements, colors, and spacing. We expect pixel-perfect implementation of the provided designs.
@@ -73,6 +76,7 @@ Your job is to create this **Timeline Component** that provides an intuitive int
 ### 1. Timeline Grid
 
 **Structure:**
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │ Work Orders                                                     │
@@ -90,6 +94,7 @@ Your job is to create this **Timeline Component** that provides an intuitive int
 ```
 
 **Zoom Levels (Timescale dropdown):**
+
 - **Day** (default): Shows individual days in header
 - **Week**: Shows weeks in header
 - **Month**: Shows months in header
@@ -97,6 +102,7 @@ Your job is to create this **Timeline Component** that provides an intuitive int
 All zoom levels show the same data, just at different scales. The timeline header updates to reflect the current zoom level.
 
 **Visual Elements:**
+
 - Left panel: Work Center names (fixed, does not scroll horizontally)
 - Right panel: Timeline grid (horizontally scrollable)
 - Current day indicator: Vertical line showing today's date
@@ -108,20 +114,22 @@ All zoom levels show the same data, just at different scales. The timeline heade
 Each work order displays as a horizontal bar on the timeline:
 
 **Bar Contents:**
+
 - Work order name (text label)
 - Status badge (pill/tag style)
 - Actions menu (three-dot button that opens dropdown with Edit/Delete options)
 
 **Status Colors:**
 
-| Status | Color | Description |
-|--------|-------|-------------|
-| Open | Blue | Default status on creation |
-| In Progress | Blue/Purple | Work has started |
-| Complete | Green | Work finished |
-| Blocked | Yellow/Orange | Work is blocked |
+| Status      | Color         | Description                |
+| ----------- | ------------- | -------------------------- |
+| Open        | Blue          | Default status on creation |
+| In Progress | Blue/Purple   | Work has started           |
+| Complete    | Green         | Work finished              |
+| Blocked     | Yellow/Orange | Work is blocked            |
 
 **Positioning:**
+
 - Bar start position = work order start date
 - Bar end position = work order end date
 - Multiple work orders can exist on the same row (work center)
@@ -132,6 +140,7 @@ Each work order displays as a horizontal bar on the timeline:
 Triggered by clicking on empty timeline area.
 
 **Panel Behavior:**
+
 - Slides in from the right
 - Fixed width (see designs)
 - Clicking outside closes the panel
@@ -139,14 +148,15 @@ Triggered by clicking on empty timeline area.
 
 **Form Fields (use Reactive Forms with FormGroup):**
 
-| Field | Type | Notes |
-|-------|------|-------|
-| Work Order Name | Text input | Required |
-| Status | ng-select dropdown | Default: "Open" |
-| Start Date | ngb-datepicker | Pre-filled from click position |
-| End Date | ngb-datepicker | Pre-filled: Start Date + 7 days |
+| Field           | Type               | Notes                           |
+| --------------- | ------------------ | ------------------------------- |
+| Work Order Name | Text input         | Required                        |
+| Status          | ng-select dropdown | Default: "Open"                 |
+| Start Date      | ngb-datepicker     | Pre-filled from click position  |
+| End Date        | ngb-datepicker     | Pre-filled: Start Date + 7 days |
 
 **On Create:**
+
 - Validate no overlap with existing orders on same work center
 - If overlap detected, show error and don't create
 - If valid, add to work orders and close panel
@@ -156,6 +166,7 @@ Triggered by clicking on empty timeline area.
 Triggered by clicking Edit from the three-dot menu on a work order bar.
 
 **Same panel as Create, but:**
+
 - Header: "Work Order Details" (same as create)
 - Fields pre-populated with existing data
 - Button text: "Save" instead of "Create"
@@ -163,28 +174,29 @@ Triggered by clicking Edit from the three-dot menu on a work order bar.
 
 ### 5. Interactions Summary
 
-| Action | Result |
-|--------|--------|
-| Click empty timeline area | Open Create panel, pre-fill start date from click position |
-| Click three-dot menu on bar | Open dropdown with Edit/Delete options |
-| Click Edit from dropdown | Open Edit panel with order data |
-| Click Delete from dropdown | Delete the work order |
-| Click outside panel | Close panel |
-| Click Cancel | Close panel |
-| Click Create/Save | Validate, save, and close panel |
-| Change Timescale dropdown | Update timeline zoom level |
-| Horizontal scroll | Scroll timeline (left panel stays fixed) |
-| Hover on row | Highlight row background |
+| Action                      | Result                                                     |
+| --------------------------- | ---------------------------------------------------------- |
+| Click empty timeline area   | Open Create panel, pre-fill start date from click position |
+| Click three-dot menu on bar | Open dropdown with Edit/Delete options                     |
+| Click Edit from dropdown    | Open Edit panel with order data                            |
+| Click Delete from dropdown  | Delete the work order                                      |
+| Click outside panel         | Close panel                                                |
+| Click Cancel                | Close panel                                                |
+| Click Create/Save           | Validate, save, and close panel                            |
+| Change Timescale dropdown   | Update timeline zoom level                                 |
+| Horizontal scroll           | Scroll timeline (left panel stays fixed)                   |
+| Hover on row                | Highlight row background                                   |
 
 ---
 
 ## Data Structures
 
 All documents follow this structure:
+
 ```typescript
 {
-  docId: string;        // Unique identifier
-  docType: string;      // Document type
+  docId: string; // Unique identifier
+  docType: string; // Document type
   data: {
     // Document-specific fields
   }
@@ -215,10 +227,10 @@ interface WorkOrderDocument {
   docType: 'workOrder';
   data: {
     name: string;
-    workCenterId: string;           // References WorkCenterDocument.docId
+    workCenterId: string; // References WorkCenterDocument.docId
     status: WorkOrderStatus;
-    startDate: string;              // ISO format (e.g., "2025-01-15")
-    endDate: string;                // ISO format
+    startDate: string; // ISO format (e.g., "2025-01-15")
+    endDate: string; // ISO format
   };
 }
 
@@ -228,6 +240,7 @@ type WorkOrderStatus = 'open' | 'in-progress' | 'complete' | 'blocked';
 ### Sample Data Requirements
 
 Create hardcoded sample data that demonstrates:
+
 - At least 5 work centers
 - At least 8 work orders across different centers
 - All 4 status types represented
@@ -239,6 +252,7 @@ Create hardcoded sample data that demonstrates:
 ## Technical Requirements
 
 ### Stack (Mandatory)
+
 - **Angular 17+** (standalone components preferred)
 - **TypeScript** (strict mode)
 - **SCSS** for all styling
@@ -249,17 +263,20 @@ Create hardcoded sample data that demonstrates:
 ### Key Implementation Notes
 
 **Timeline Positioning:**
+
 - Calculate bar positions based on dates relative to visible timeline range
 - Handle zoom level changes (recalculate column widths)
 - Ensure smooth horizontal scrolling
 - Left panel must stay fixed while timeline scrolls
 
 **Form Validation:**
+
 - All fields required
 - End date must be after start date
 - No overlap with existing orders on same work center
 
 **Responsiveness:**
+
 - Should not break badly on smaller screens
 - Acceptable to require horizontal scroll on mobile
 
@@ -270,6 +287,7 @@ Create hardcoded sample data that demonstrates:
 ### 1. Working Application (Required)
 
 Angular 17+ application implementing:
+
 - Timeline grid with all zoom levels (Day/Week/Month)
 - Work order bars with correct positioning and status colors
 - Create/Edit slide-out panel with form validation
@@ -280,6 +298,7 @@ Angular 17+ application implementing:
 ### 2. Pixel-Perfect Design (Required)
 
 Match the provided Sketch designs as closely as possible:
+
 - Colors, spacing, typography (Circular Std font)
 - Status badge styles
 - Panel layout and form styling
@@ -289,6 +308,7 @@ Match the provided Sketch designs as closely as possible:
 ### 3. Sample Data (Required)
 
 Hardcoded data following the document structure:
+
 - 5+ work centers
 - 8+ work orders
 - All 4 status types
@@ -297,18 +317,21 @@ Hardcoded data following the document structure:
 ### 4. Documentation (Required)
 
 **README.md** with:
+
 - How to run the application (`ng serve`)
 - Any setup steps required
 - Brief description of your approach
 - Libraries used and why
 
 **Code comments** explaining:
+
 - Complex date calculations
 - Key decisions
 
 ### 5. Demo Video (Required)
 
 **5-10 minute Loom video** showing:
+
 - Application running with sample data
 - All zoom levels (Day/Week/Month switching)
 - Creating a new work order (click empty area, fill form, save)
@@ -320,6 +343,7 @@ Hardcoded data following the document structure:
 ### 6. Public Repository (Required)
 
 **GitHub/GitLab repo** with:
+
 - Working code (runnable with `ng serve`)
 - Sample data
 - README
@@ -332,6 +356,7 @@ Hardcoded data following the document structure:
 If you finish early or want to showcase advanced skills:
 
 ### Features
+
 - **localStorage persistence**: Work orders survive page refresh
 - **Smooth animations**: Panel slide-in/out, bar hover effects
 - **Keyboard navigation**: Tab through form, Escape to close panel
@@ -340,15 +365,18 @@ If you finish early or want to showcase advanced skills:
 - **Tooltip on bar hover**: Show work order details (name, status, full date range) in a tooltip
 
 ### Testing
+
 - **Unit tests**: Component tests with Jest or Karma
 - **E2E tests**: Cypress or Playwright scenarios
 
 ### Polish
+
 - **Custom datepicker styling**: Match design system
 - **Accessibility**: ARIA labels, focus management
 - **Performance**: OnPush change detection, trackBy functions
 
 ### Documentation
+
 - **AI prompts**: Save prompts used in markdown files
 - **Trade-offs**: Document decisions you made and why
 - **`@upgrade` comments**: Tag future improvements in code
@@ -358,6 +386,7 @@ If you finish early or want to showcase advanced skills:
 ## Evaluation Criteria
 
 ### Design Implementation (40%)
+
 - **Pixel-perfect accuracy (25%)**: Matches Sketch designs
   - Colors, spacing, typography correct
   - Status badges styled correctly
@@ -366,6 +395,7 @@ If you finish early or want to showcase advanced skills:
 - **Visual polish (5%)**: Hover states, transitions, attention to detail
 
 ### Functionality (40%)
+
 - **Core features working (25%)**:
   - Timeline renders correctly at all zoom levels
   - Work order bars positioned accurately
@@ -380,6 +410,7 @@ If you finish early or want to showcase advanced skills:
   - Form validation prevents invalid data
 
 ### Code Quality (20%)
+
 - **Angular best practices (8%)**:
   - Standalone components (preferred)
   - Reactive Forms properly used
@@ -395,6 +426,7 @@ If you finish early or want to showcase advanced skills:
   - Good README
 
 ### Bonus Points (Extra Credit)
+
 - localStorage persistence
 - Automated tests
 - Animations and polish
@@ -410,6 +442,7 @@ If you finish early or want to showcase advanced skills:
 ## Hints & Tips
 
 **Start simple, add complexity gradually:**
+
 1. Get static timeline rendering first (hardcoded columns)
 2. Add work order bars (hardcoded positions)
 3. Implement zoom level switching
@@ -419,22 +452,26 @@ If you finish early or want to showcase advanced skills:
 7. Polish and responsive fixes
 
 **Date positioning is the trickiest part:**
+
 - Calculate the visible date range based on zoom level
 - Convert dates to pixel positions relative to container width
 - Remember to handle scroll offset
 
 **Use the Sketch file:**
+
 - Inspect for exact colors, spacing, font sizes
 - Export assets if needed
 - Don't guess, measure!
 
 **Form state management:**
+
 - Single panel component for both create and edit
 - Use a mode flag: `'create' | 'edit'`
 - Reset form when opening in create mode
 - Populate form when opening in edit mode
 
 **Infinite scroll (bonus) approach:**
+
 - Detect when scroll position approaches left/right edge
 - Prepend or append additional date columns
 - When prepending, adjust scroll position to maintain view
@@ -467,11 +504,14 @@ A: Center the timeline on today's date. Show a reasonable range based on zoom le
 ## Submission
 
 Provide:
+
 1. **Public GitHub/GitLab repository** with:
-  - Working Angular application
-  - Sample data demonstrating features
-  - README with setup instructions
-  - Clean commit history
+
+- Working Angular application
+- Sample data demonstrating features
+- README with setup instructions
+- Clean commit history
+
 2. **Loom video** (max 10 minutes) demonstrating your solution
 3. **(Bonus)** Automated test suite
 4. **(Bonus)** Markdown files with AI prompts you used

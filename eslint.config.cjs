@@ -1,0 +1,61 @@
+const tseslint = require('@typescript-eslint/eslint-plugin');
+const tsParser = require('@typescript-eslint/parser');
+const eslintPluginPrettier = require('eslint-plugin-prettier');
+const angular = require('@angular-eslint/eslint-plugin');
+
+module.exports = [
+  {
+    ignores: ['**/coverage/*', '**/projects/testing/**']
+  },
+  {
+    files: ['./src/**/*.ts'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        project: './tsconfig.eslint.json',
+        tsconfigRootDir: __dirname,
+        sourceType: 'module',
+        ecmaVersion: 'latest'
+      }
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+      '@angular-eslint': angular,
+      prettier: eslintPluginPrettier
+    },
+    rules: {
+      ...tseslint.configs.recommended.rules,
+      'no-console': 2,
+      'prettier/prettier': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_'
+        }
+      ],
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          prefix: 'erp',
+          style: 'kebab-case',
+          type: 'element'
+        }
+      ],
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          prefix: 'erp',
+          style: 'camelCase',
+          type: 'attribute'
+        }
+      ]
+    }
+  },
+  {
+    files: ['**/*.spec.ts', './src/typings/*.d.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off'
+    }
+  }
+];

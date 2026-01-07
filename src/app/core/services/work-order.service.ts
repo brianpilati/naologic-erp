@@ -14,13 +14,9 @@ export class WorkOrderService {
   // State
   // -------------------------
 
-  private readonly _workCenters = signal<WorkCenterDocument[]>(
-    getWorkCenterDocumentData() as WorkCenterDocument[]
-  );
+  private readonly _workCenters = signal<WorkCenterDocument[]>(getWorkCenterDocumentData() as WorkCenterDocument[]);
 
-  private readonly _workOrders = signal<WorkOrderDocument[]>(
-    getWorkOrderData() as WorkOrderDocument[]
-  );
+  private readonly _workOrders = signal<WorkOrderDocument[]>(getWorkOrderData() as WorkOrderDocument[]);
 
   // -------------------------
   // Public selectors
@@ -31,9 +27,7 @@ export class WorkOrderService {
   readonly workOrders = computed(() => this._workOrders());
 
   workOrdersByCenter(workCenterId: string): WorkOrderDocument[] {
-    return this._workOrders().filter(
-      (wo) => wo.data.workCenterId === workCenterId
-    );
+    return this._workOrders().filter((wo) => wo.data.workCenterId === workCenterId);
   }
 
   // -------------------------
@@ -53,15 +47,11 @@ export class WorkOrderService {
       throw new Error('Work order overlaps with an existing order.');
     }
 
-    this._workOrders.update((orders) =>
-      orders.map((o) => (o.docId === order.docId ? order : o))
-    );
+    this._workOrders.update((orders) => orders.map((o) => (o.docId === order.docId ? order : o)));
   }
 
   delete(orderId: string): void {
-    this._workOrders.update((orders) =>
-      orders.filter((o) => o.docId !== orderId)
-    );
+    this._workOrders.update((orders) => orders.filter((o) => o.docId !== orderId));
   }
 
   // -------------------------
@@ -94,12 +84,7 @@ export class WorkOrderService {
    * Inclusive overlap check:
    * [aStart, aEnd] ∩ [bStart, bEnd]
    */
-  private dateRangesOverlap(
-    aStart: Date,
-    aEnd: Date,
-    bStart: Date,
-    bEnd: Date
-  ): boolean {
+  private dateRangesOverlap(aStart: Date, aEnd: Date, bStart: Date, bEnd: Date): boolean {
     return aStart <= bEnd && bStart <= aEnd;
   }
 
@@ -111,11 +96,7 @@ export class WorkOrderService {
    * Utility to generate a new work order skeleton
    * (used by create panel).
    */
-  createDraft(
-    workCenterId: string,
-    startDate: Date,
-    endDate: Date
-  ): WorkOrderDocument {
+  createDraft(workCenterId: string, startDate: Date, endDate: Date): WorkOrderDocument {
     return {
       docId: crypto.randomUUID(),
       docType: 'workOrder',
@@ -124,8 +105,8 @@ export class WorkOrderService {
         workCenterId,
         status: 'open',
         startDate: startDate.toISOString().slice(0, 10),
-        endDate: endDate.toISOString().slice(0, 10),
-      },
+        endDate: endDate.toISOString().slice(0, 10)
+      }
     };
   }
 

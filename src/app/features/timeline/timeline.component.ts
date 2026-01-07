@@ -17,10 +17,10 @@ import { WorkOrderPanelComponent } from './components/work-order-panel/work-orde
 */
 
 @Component({
-  selector: 'app-timeline',
+  selector: 'erp-timeline',
   standalone: true,
   imports: [
-    CommonModule,
+    CommonModule
     /*
     TimelineHeaderComponent,
     TimelineGridComponent,
@@ -29,7 +29,7 @@ import { WorkOrderPanelComponent } from './components/work-order-panel/work-orde
     */
   ],
   templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.scss'],
+  styleUrls: ['./timeline.component.scss']
 })
 export class TimelineComponent {
   // --------------------------------------------------

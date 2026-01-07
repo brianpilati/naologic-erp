@@ -72,9 +72,7 @@ export class TimelineService {
    */
   dateToX(date: Date): number {
     const daysFromStart =
-      (this.startOfDay(date).getTime() -
-        this.startOfDay(this._visibleStart()).getTime()) /
-      this.MS_PER_DAY;
+      (this.startOfDay(date).getTime() - this.startOfDay(this._visibleStart()).getTime()) / this.MS_PER_DAY;
 
     return Math.max(0, daysFromStart) * this.dayWidth();
   }
@@ -112,7 +110,7 @@ export class TimelineService {
         startDate: start,
         endDate: end,
         label: current.toISOString().slice(0, 10),
-        widthPx: this.DAY_WIDTH_PX,
+        widthPx: this.DAY_WIDTH_PX
       });
 
       current.setDate(current.getDate() + 1);
@@ -134,7 +132,7 @@ export class TimelineService {
         startDate: start,
         endDate: end,
         label: `Week of ${start.toISOString().slice(0, 10)}`,
-        widthPx: this.WEEK_WIDTH_PX,
+        widthPx: this.WEEK_WIDTH_PX
       });
 
       current.setDate(current.getDate() + 7);
@@ -145,11 +143,7 @@ export class TimelineService {
 
   private buildMonthColumns(): TimelineColumn[] {
     const columns: TimelineColumn[] = [];
-    let current = new Date(
-      this._visibleStart().getFullYear(),
-      this._visibleStart().getMonth(),
-      1
-    );
+    let current = new Date(this._visibleStart().getFullYear(), this._visibleStart().getMonth(), 1);
 
     while (current <= this._visibleEnd()) {
       const start = new Date(current);
@@ -160,9 +154,9 @@ export class TimelineService {
         endDate: end,
         label: start.toLocaleString('default', {
           month: 'long',
-          year: 'numeric',
+          year: 'numeric'
         }),
-        widthPx: this.MONTH_WIDTH_PX,
+        widthPx: this.MONTH_WIDTH_PX
       });
 
       current.setMonth(current.getMonth() + 1);

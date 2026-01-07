@@ -8,10 +8,7 @@ describe('WorkOrderService', () => {
 
   const WORK_CENTER_ID = 'wc-1';
 
-  const baseOrder = (
-    overrides: Partial<WorkOrderDocument['data']> = {},
-    docId = 'wo-1'
-  ): WorkOrderDocument => ({
+  const baseOrder = (overrides: Partial<WorkOrderDocument['data']> = {}, docId = 'wo-1'): WorkOrderDocument => ({
     docId,
     docType: 'workOrder',
     data: {
@@ -20,13 +17,13 @@ describe('WorkOrderService', () => {
       status: 'open',
       startDate: '2025-01-01',
       endDate: '2025-01-05',
-      ...overrides,
-    },
+      ...overrides
+    }
   });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WorkOrderService, provideZonelessChangeDetection()],
+      providers: [WorkOrderService, provideZonelessChangeDetection()]
     });
 
     service = TestBed.inject(WorkOrderService);
@@ -51,8 +48,8 @@ describe('WorkOrderService', () => {
         docId: jasmine.any(String),
         docType: 'workCenter',
         data: jasmine.objectContaining({
-          name: jasmine.any(String),
-        }),
+          name: jasmine.any(String)
+        })
       })
     );
   });
@@ -87,16 +84,11 @@ describe('WorkOrderService', () => {
 
   it('should throw when creating an overlapping work order', () => {
     const existing = baseOrder();
-    const overlapping = baseOrder(
-      { startDate: '2025-01-03', endDate: '2025-01-07' },
-      'wo-2'
-    );
+    const overlapping = baseOrder({ startDate: '2025-01-03', endDate: '2025-01-07' }, 'wo-2');
 
     (service as any)._workOrders.set([existing]);
 
-    expect(() => service.create(overlapping)).toThrowError(
-      'Work order overlaps with an existing order.'
-    );
+    expect(() => service.create(overlapping)).toThrowError('Work order overlaps with an existing order.');
   });
 
   // ---------------------------------------
@@ -116,21 +108,13 @@ describe('WorkOrderService', () => {
 
   it('should throw when updating causes overlap with another order', () => {
     const order1 = baseOrder({}, 'wo-1');
-    const order2 = baseOrder(
-      { startDate: '2025-01-10', endDate: '2025-01-15' },
-      'wo-2'
-    );
+    const order2 = baseOrder({ startDate: '2025-01-10', endDate: '2025-01-15' }, 'wo-2');
 
-    const updatedOrder2 = baseOrder(
-      { startDate: '2025-01-03', endDate: '2025-01-07' },
-      'wo-2'
-    );
+    const updatedOrder2 = baseOrder({ startDate: '2025-01-03', endDate: '2025-01-07' }, 'wo-2');
 
     (service as any)._workOrders.set([order1, order2]);
 
-    expect(() => service.update(updatedOrder2)).toThrowError(
-      'Work order overlaps with an existing order.'
-    );
+    expect(() => service.update(updatedOrder2)).toThrowError('Work order overlaps with an existing order.');
   });
 
   it('should ignore self when checking overlap during update', () => {
@@ -150,8 +134,8 @@ describe('WorkOrderService', () => {
         workCenterId: 'wc-1',
         status: 'open',
         startDate: '2025-01-01',
-        endDate: '2025-01-05',
-      },
+        endDate: '2025-01-05'
+      }
     };
 
     const order2: WorkOrderDocument = {
@@ -162,8 +146,8 @@ describe('WorkOrderService', () => {
         workCenterId: 'wc-1',
         status: 'open',
         startDate: '2025-01-06',
-        endDate: '2025-01-10',
-      },
+        endDate: '2025-01-10'
+      }
     };
 
     // Force known initial state
@@ -173,17 +157,15 @@ describe('WorkOrderService', () => {
       ...order1,
       data: {
         ...order1.data,
-        name: 'Updated Order 1',
-      },
+        name: 'Updated Order 1'
+      }
     };
 
     service.update(updatedOrder1);
 
     const result = service.workOrders();
 
-    expect(result.find((o) => o.docId === 'wo-1')?.data.name).toBe(
-      'Updated Order 1'
-    );
+    expect(result.find((o) => o.docId === 'wo-1')?.data.name).toBe('Updated Order 1');
 
     expect(result.find((o) => o.docId === 'wo-2')).toEqual(order2);
   });
@@ -209,10 +191,7 @@ describe('WorkOrderService', () => {
 
   it('should detect overlapping date ranges (inclusive)', () => {
     const existing = baseOrder();
-    const overlapping = baseOrder(
-      { startDate: '2025-01-05', endDate: '2025-01-10' },
-      'wo-2'
-    );
+    const overlapping = baseOrder({ startDate: '2025-01-05', endDate: '2025-01-10' }, 'wo-2');
 
     (service as any)._workOrders.set([existing]);
 
@@ -221,10 +200,7 @@ describe('WorkOrderService', () => {
 
   it('should not detect overlap when date ranges do not intersect', () => {
     const existing = baseOrder();
-    const nonOverlapping = baseOrder(
-      { startDate: '2025-01-06', endDate: '2025-01-10' },
-      'wo-2'
-    );
+    const nonOverlapping = baseOrder({ startDate: '2025-01-06', endDate: '2025-01-10' }, 'wo-2');
 
     (service as any)._workOrders.set([existing]);
 
@@ -260,8 +236,8 @@ describe('WorkOrderService', () => {
         workCenterId: WORK_CENTER_ID,
         status: 'open',
         startDate: '2025-02-01',
-        endDate: '2025-02-05',
-      },
+        endDate: '2025-02-05'
+      }
     });
   });
 });

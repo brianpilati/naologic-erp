@@ -10,13 +10,13 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-coverage'),
       require('karma-jasmine-html-reporter'),
-      require('karma-spec-reporter'),
+      require('karma-spec-reporter')
     ],
     client: {
       jasmine: {
-        random: false,
+        random: false
       },
-      clearContext: false, // leave Jasmine Spec Runner output visible in browser
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     coverageReporter: {
       dir: require('path').join(__dirname, '..', 'coverage'),
@@ -27,7 +27,7 @@ module.exports = function (config) {
         statements: [90, 100],
         functions: [90, 100],
         branches: [90, 100],
-        lines: [90, 100],
+        lines: [90, 100]
       },
       check: {
         emitWarning: false,
@@ -36,9 +36,9 @@ module.exports = function (config) {
           branches: 100,
           lines: 100,
           functions: 100,
-          excludes: [],
-        },
-      },
+          excludes: []
+        }
+      }
     },
     reportSlowerThan: 1000,
     reporters: ['progress', 'kjhtml'],
@@ -49,13 +49,13 @@ module.exports = function (config) {
       suppressFailed: false, // do not print information about failed tests
       suppressPassed: false, // do not print information about passed tests
       suppressSkipped: true, // do not print information about skipped tests
-      showSpecTiming: false, // print the time elapsed for each spec
+      showSpecTiming: false // print the time elapsed for each spec
     },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['ChromeHeadless'],
-    singleRun: false,
+    singleRun: false
   });
 };

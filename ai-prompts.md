@@ -627,3 +627,114 @@ And where did you get that strange \_\_ class names for the scss what that in th
 ### My thoughts and per your request of major decisions
 
 -- This one stunk. I have no idea why my AI decided to go with BEM.
+
+## Prompt
+
+Are we going to need these scss files?
+
+└─ styles/
+├─ \_variables.scss
+├─ \_mixins.scss
+└─ \_typography.scss
+
+## Prompt
+
+Give me a 100% jasmine test suite for this code.
+
+<timeline.component.ts code>
+
+## Prompt
+
+Argument of type '{ workCenters: () => WorkCenterDocument[]; workOrders: () => WorkOrderDocument[]; }' is not assignable to parameter of type 'readonly (keyof WorkOrderService)[] | { readonly workCenters?: Signal<WorkCenterDocument[]> | undefined; readonly workOrders?: Signal<WorkOrderDocument[]> | undefined; ... 5 more ...; createDraft?: ((workCenterId: string, startDate: Date, endDate: Date) => WorkOrderDocument) | undefined; } | undefined'.
+Types of property 'workCenters' are incompatible.
+Type '() => WorkCenterDocument[]' is not assignable to type 'Signal<WorkCenterDocument[]>'.
+Type '() => WorkCenterDocument[]' is not assignable to type '{ [SIGNAL]: unknown; }'.ts(2345)
+
+---
+
+workOrderService = jasmine.createSpyObj<WorkOrderService>(
+'WorkOrderService',
+['create', 'update', 'delete', 'createDraft', 'workOrdersByCenter'],
+{
+workCenters: () => [workCenter],
+workOrders: () => [workOrder]
+}
+);
+
+## Prompt
+
+Moving forward all test files need to have the `provideZonelessChangeDetection(),` provider. Do not regenerate the file.
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt
+
+## Prompt

@@ -12,8 +12,8 @@ const DATA: WorkOrderDocument[] = [
       workCenterId: 'wc-1',
       status: 'complete',
       startDate: '2025-01-01',
-      endDate: '2025-01-05',
-    },
+      endDate: '2025-01-05'
+    }
   },
   {
     docId: 'wo-2',
@@ -23,8 +23,8 @@ const DATA: WorkOrderDocument[] = [
       workCenterId: 'wc-1',
       status: 'in-progress',
       startDate: '2025-01-07',
-      endDate: '2025-01-12',
-    },
+      endDate: '2025-01-12'
+    }
   },
 
   // -------------------------
@@ -38,8 +38,8 @@ const DATA: WorkOrderDocument[] = [
       workCenterId: 'wc-2',
       status: 'open',
       startDate: '2025-01-03',
-      endDate: '2025-01-06',
-    },
+      endDate: '2025-01-06'
+    }
   },
 
   // -------------------------
@@ -53,8 +53,8 @@ const DATA: WorkOrderDocument[] = [
       workCenterId: 'wc-3',
       status: 'blocked',
       startDate: '2025-01-05',
-      endDate: '2025-01-10',
-    },
+      endDate: '2025-01-10'
+    }
   },
   {
     docId: 'wo-5',
@@ -64,8 +64,8 @@ const DATA: WorkOrderDocument[] = [
       workCenterId: 'wc-3',
       status: 'open',
       startDate: '2025-01-12',
-      endDate: '2025-01-16',
-    },
+      endDate: '2025-01-16'
+    }
   },
 
   // -------------------------
@@ -79,8 +79,8 @@ const DATA: WorkOrderDocument[] = [
       workCenterId: 'wc-4',
       status: 'complete',
       startDate: '2025-01-06',
-      endDate: '2025-01-07',
-    },
+      endDate: '2025-01-07'
+    }
   },
 
   // -------------------------
@@ -94,8 +94,8 @@ const DATA: WorkOrderDocument[] = [
       workCenterId: 'wc-5',
       status: 'open',
       startDate: '2025-01-08',
-      endDate: '2025-01-11',
-    },
+      endDate: '2025-01-11'
+    }
   },
   {
     docId: 'wo-8',
@@ -105,15 +105,12 @@ const DATA: WorkOrderDocument[] = [
       workCenterId: 'wc-5',
       status: 'complete',
       startDate: '2025-01-13',
-      endDate: '2025-01-15',
-    },
-  },
+      endDate: '2025-01-15'
+    }
+  }
 ];
 
-export function getWorkOrderData(
-  index?: number,
-  asArray = false
-): WorkOrderDocument | WorkOrderDocument[] {
+export function getWorkOrderData(index?: number, asArray = false): WorkOrderDocument | WorkOrderDocument[] {
   if (index !== undefined && index >= 0 && index < DATA.length) {
     const item = structuredClone(DATA[index]);
     return asArray ? [item] : item;

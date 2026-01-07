@@ -4,10 +4,10 @@ import { TimelineComponent } from './features/timeline/timeline.component';
 export const routes: Routes = [
   {
     path: '',
-    component: TimelineComponent,
+    component: TimelineComponent
   },
   {
     path: '**',
-    redirectTo: '',
-  },
+    redirectTo: ''
+  }
 ];
