@@ -3,7 +3,10 @@
 ## Timeline
 
 1. 2025-01-06 - 1 hour
-2. 2025-01-07 - .5 hour
+2. 2025-01-07 - .5 hours
+3. 2025-01-07 - 2 hours
+
+Total: 3.5 hours
 
 ## Prompt
 
@@ -372,6 +375,8 @@ Keep it boring and readable.
 
 4️⃣ TimelineHeaderComponent
 
+**_FINISHED_**
+
 Responsibilities
 • Timescale dropdown (ng-select)
 • Renders date labels
@@ -540,7 +545,9 @@ return asArray ? [item] : item;
 return structuredClone(DATA);
 }
 
---- Before we go further, I need a 100% jasmine test suite for this code. As usual, as few spyies and mocks as possible.
+## Prompt
+
+Before we go further, I need a 100% jasmine test suite for this code. As usual, as few spyies and mocks as possible.
 
 ## Prompt
 
@@ -630,6 +637,10 @@ And where did you get that strange \_\_ class names for the scss what that in th
 
 ## Prompt
 
+This is the new standard for scss files "-" instead of "\_\_"
+
+## Prompt
+
 Are we going to need these scss files?
 
 └─ styles/
@@ -667,19 +678,162 @@ Moving forward all test files need to have the `provideZonelessChangeDetection()
 
 ## Prompt
 
-## Prompt
+This is the new canon for linting and selector prefixes.
+
+```ts
+const tseslint = require('@typescript-eslint/eslint-plugin');
+const tsParser = require('@typescript-eslint/parser');
+const eslintPluginPrettier = require('eslint-plugin-prettier');
+const angular = require('@angular-eslint/eslint-plugin');
+
+module.exports = [
+  {
+    ignores: ['**/coverage/*', '**/projects/testing/**']
+  },
+  {
+    files: ['./src/**/*.ts'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        project: './tsconfig.eslint.json',
+        tsconfigRootDir: __dirname,
+        sourceType: 'module',
+        ecmaVersion: 'latest'
+      }
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+      '@angular-eslint': angular,
+      prettier: eslintPluginPrettier
+    },
+    rules: {
+      ...tseslint.configs.recommended.rules,
+      'no-console': 2,
+      'prettier/prettier': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_'
+        }
+      ],
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          prefix: 'erp',
+          style: 'kebab-case',
+          type: 'element'
+        }
+      ],
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          prefix: 'erp',
+          style: 'camelCase',
+          type: 'attribute'
+        }
+      ]
+    }
+  },
+  {
+    files: ['**/*.spec.ts', './src/typings/*.d.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off'
+    }
+  }
+];
+```
 
 ## Prompt
 
-## Prompt
+Let's get the code for this component now, including the .ts, .html and .scss files in separate code windows.
+
+🧩 Presentation Components
+
+4️⃣ TimelineHeaderComponent
+
+Responsibilities
+• Timescale dropdown (ng-select)
+• Renders date labels
+• Emits zoom change
+
+@Input() columns!: TimelineColumn[];
+@Input() zoomLevel!: ZoomLevel;
+@Output() zoomChange = new EventEmitter<ZoomLevel>();
+
+---
+
+Current implementation in timeline.component.html
+
+---
+
+```html
+<app-timeline-header
+  class="timeline-header"
+  [columns]="timelineService.columns()"
+  [zoomLevel]="timelineService.zoomLevel()"
+  (zoomChange)="onZoomChange($event)" />
+```
 
 ## Prompt
 
-## Prompt
+Do a websearch and solve this issue
+
+---
+
+Can't bind to 'modelValue' since it isn't a known property of 'ng-select'.
+
+1. If 'modelValue' is an Angular directive, then add 'CommonModule' to the '@Component.imports' of this component.
+2. To allow any property add 'NO_ERRORS_SCHEMA' to the '@Component.schemas' of this component.ngtsc(-998002)
+   timeline-header.component.ts(12, 16): Error occurs in the template of component TimelineHeaderComponent.
+
+---
+
+```html
+<ng-select
+  class="timeline-header-select"
+  [items]="zoomOptions"
+  [clearable]="false"
+  [searchable]="false"
+  [modelValue]="zoomLevel"
+  (change)="onZoomLevelChange($event)" />
+```
 
 ## Prompt
 
+Let's great a \_global.scss file and start to consolidate all the colors, etc. there.
+
+--- Given these .scss files, give me a \_global.scss file with all the color variables
+
+<two-scss-files>
+
 ## Prompt
+
+Let's start with this file. Our "Work Orders" title, the timescale/month dropdown and Parent grid are not formatted correctly.
+
+Can you analyze the attached file and give me the scss delta to come into pixel perfect alignment.
+
+## Prompt
+
+I see an issue ... this belongs in another component.
+
+<div class="timeline-header-columns">
+  @for (column of columns; track column.startDate.getTime()) {
+    <div class="timeline-header-column" [style.width.px]="column.widthPx">
+      {{ column.label }}
+    </div>
+  }
+</div>
+
+## Prompt
+
+This is what I have for the header. The Timescale label is not in a container that matches the ng-select. And the spacing between the Work orders the controls is off.
+
+Can you use that sketch file to fix the scss?
+
+## Prompt
+
+The scss is correct now but when I click on the triangle it disappears and the options do not appear
 
 ## Prompt
 

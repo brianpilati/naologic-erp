@@ -1,0 +1,33 @@
+<div class="timeline-header-container">
+  <!-- Left: Title -->
+  <div class="timeline-header-title">Work Orders</div>
+
+  <!-- Right: Controls -->
+  <div class="timeline-header-controls">
+    <div class="timeline-timescale-container">
+      <label class="timeline-header-label">Timescale</label>
+    </div>
+
+    <div class="timeline-select-container">
+      <ng-select
+        class="timeline-header-select"
+        [items]="zoomOptions"
+        [clearable]="false"
+        [searchable]="false"
+        [(ngModel)]="zoomLevel"
+        (change)="onZoomLevelChange($event)"
+        appendTo="body"
+        dropdownPanelClass="erp-timescale-panel">
+      </ng-select>
+    </div>
+  </div>
+</div>
+
+<!-- Timeline column labels -->
+<!-- <div class="timeline-header-columns">
+  @for (column of columns; track column.startDate.getTime()) {
+    <div class="timeline-header-column" [style.width.px]="column.widthPx">
+      {{ column.label }}
+    </div>
+  }
+</div> -->

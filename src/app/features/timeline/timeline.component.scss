@@ -1,24 +1,28 @@
+@use 'global' as global;
+
 .timeline {
   display: flex;
   flex-direction: column;
   height: 100%;
-  font-family: 'Circular-Std';
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* -----------------------------------
  * Header
  * ----------------------------------- */
 
-.timeline__header {
+.timeline-header {
   flex: 0 0 auto;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid global.$color-border-default;
 }
 
 /* -----------------------------------
  * Body Layout
  * ----------------------------------- */
 
-.timeline__body {
+.timeline-body {
   display: flex;
   flex: 1 1 auto;
   min-height: 0; // allows proper scrolling
@@ -28,24 +32,24 @@
  * Left Panel (Work Centers)
  * ----------------------------------- */
 
-.timeline__left {
+.timeline-left {
   flex: 0 0 240px; // fixed width per design
-  border-right: 1px solid #e5e7eb;
-  background-color: #ffffff;
+  border-right: 1px solid global.$color-border-default;
+  background-color: global.$color-white;
 }
 
-.timeline__work-center {
+.timeline-work-center {
   height: 56px; // MUST match row height
   padding: 0 16px;
   display: flex;
   align-items: center;
   font-size: 14px;
   font-weight: 500;
-  color: #111827;
-  border-bottom: 1px solid #f3f4f6;
+  color: global.$color-text-primary;
+  border-bottom: 1px solid global.$color-border-light;
 
   &:hover {
-    background-color: #f9fafb;
+    background-color: global.$color-bg-muted;
   }
 }
 
@@ -53,11 +57,11 @@
  * Right Panel (Timeline Grid)
  * ----------------------------------- */
 
-.timeline__right {
+.timeline-right {
   flex: 1 1 auto;
   overflow: hidden; // grid manages scroll
   position: relative;
-  background-color: #ffffff;
+  background-color: global.$color-white;
 }
 
 /* -----------------------------------
@@ -65,12 +69,18 @@
  * ----------------------------------- */
 
 @media (max-width: 768px) {
-  .timeline__left {
+  .timeline-left {
     flex: 0 0 180px;
   }
 
-  .timeline__work-center {
+  .timeline-work-center {
     font-size: 13px;
     padding: 0 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-left {
+    flex: 0 0 160px;
   }
 }

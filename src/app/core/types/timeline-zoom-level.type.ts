@@ -1,4 +1,5 @@
 export const TimelineZoomLevelTypes = {
+  Hour: 'hour',
   Day: 'day',
   Week: 'week',
   Month: 'month'

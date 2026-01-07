@@ -1,26 +1,23 @@
 <div class="timeline">
   <!-- Header -->
-  app-timeline-header
-  <!-- <app-timeline-header
-    class="timeline__header"
-    [columns]="timelineService.columns()"
+  <erp-timeline-header
+    class="timeline-header"
     [zoomLevel]="timelineService.zoomLevel()"
-    (zoomChange)="onZoomChange($event)"
-  /> -->
+    (zoomChange)="onZoomChange($event)" />
 
   <!-- Body -->
-  <div class="timeline__body">
+  <div class="timeline-body">
     <!-- Left: Work Centers (fixed) -->
-    <div class="timeline__left">
+    <div class="timeline-left">
       @for (center of workCenters(); track center.docId) {
-        <div class="timeline__work-center">
+        <div class="timeline-work-center">
           {{ center.data.name }}
         </div>
       }
     </div>
 
     <!-- Right: Timeline Grid (scrollable) -->
-    <div class="timeline__right">
+    <div class="timeline-right">
       app-timeline-grid
       <!-- <app-timeline-grid
         [columns]="timelineService.columns()"
