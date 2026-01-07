@@ -1,4 +1,9 @@
-# AI Prompts
+# AI Prompts & Timeline
+
+## Timeline
+
+1. 2025-01-06 - 1 hour
+2. 2025-01-07 - .5 hour
 
 ## Prompt
 
