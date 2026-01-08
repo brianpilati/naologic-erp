@@ -5,7 +5,6 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 12px 16px;
   background-color: global.$background-color;
 
   .timeline-header-title {
@@ -19,57 +18,6 @@
     line-height: 28px;
     margin-bottom: 30px;
   }
-
-  /*
-  .timeline-header-controls {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 4px;
-
-    .timeline-timescale-container {
-      width: 75px;
-      height: 25px;
-      border-radius: 5px 0px 0px 5px;
-      background-color: rgba(241, 243, 248, 0.75);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      .timeline-header-label {
-        width: 59px;
-        height: 16px;
-        color: rgba(104, 113, 150, 1);
-        font-family: global.$font-family-base;
-        font-size: 13px;
-        font-weight: 400;
-        font-style: book;
-      }
-    }
-
-    .timeline-select-container {
-      width: 71px;
-      height: 25px;
-      border-radius: 0px 5px 5px 0px;
-
-      .timeline-header-select {
-        width: 40px;
-        height: 16px;
-        color: rgba(62, 64, 219, 1);
-        font-family: global.$font-family-base;
-        font-size: 13px;
-        font-weight: 500;
-        font-style: medium;
-
-        ::ng-deep .ng-select-container {
-          min-height: 32px;
-          border-radius: 6px;
-        }
-      }
-    }
-  }
-    */
 
   .timeline-header-controls {
     display: flex;

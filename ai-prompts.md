@@ -5,8 +5,9 @@
 1. 2025-01-06 - 1 hour
 2. 2025-01-07 - .5 hours
 3. 2025-01-07 - 2 hours
+4. 2025-01-07 - 1.5 hours
 
-Total: 3.5 hours
+Total: 5 hours
 
 ## Prompt
 
@@ -837,7 +838,80 @@ The scss is correct now but when I click on the triangle it disappears and the o
 
 ## Prompt
 
+There has been a bit of a misunderstanding. The work center row and the app-timeline-grid are the same row. however the task can overlap months. It appears the dates should scroll left to right.
+
+So the workcenter row corresponds to the task rows.
+
+--- row 1 left
+
+---
+
+ <div class="timeline-left">
+      <div class="work-center-header">
+        <div class="work-center-header-label">Work Center</div>
+      </div>
+
+--- Row 1 right
+
+<!-- <div class="timeline-header-columns">
+  @for (column of columns; track column.startDate.getTime()) {
+    <div class="timeline-header-column" [style.width.px]="column.widthPx">
+      {{ column.label }}
+    </div>
+  }
+</div> -->
+
+--- rows - left
+@for (center of workCenters(); track center.docId) {
+
+<div class="timeline-work-center">
+{{ center.data.name }}
+</div>
+}
+</div>
+
+--- Then the tasks assigned to the work center are on the right
+
 ## Prompt
+
+This is the route you were planning.
+
+Let's create the app-timeline-grid and merge all this code into one component. Or what do you recommend?
+
+---
+
+ <!-- Left: Work Centers (fixed) -->
+
+    <div class="timeline-left">
+      <div class="work-center-header">
+        <div class="work-center-header-label">Work Center</div>
+      </div>
+
+      @for (center of workCenters(); track center.docId) {
+        <div class="timeline-work-center">
+          {{ center.data.name }}
+        </div>
+      }
+    </div>
+
+    <!-- Right: Timeline Grid (scrollable) -->
+    <div class="timeline-right">
+      app-timeline-grid
+      <!-- <app-timeline-grid
+        [columns]="timelineService.columns()"
+        (createAt)="onCreateAt($event.date, $event.workCenterId)"
+      >
+        @for (center of workCenters(); track center.docId) {
+          <app-work-center-row
+            [workCenter]="center"
+            [orders]="workOrdersForCenter(center)"
+            (edit)="onEdit($event)"
+            (delete)="onDelete($event)"
+          />
+        }
+      </app-timeline-grid>
+           -->
+    </div>
 
 ## Prompt
 

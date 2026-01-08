@@ -2,19 +2,19 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TimelineZoomLevelType, TimelineZoomLevelTypes } from '../../../core/types/timeline-zoom-level.type';
-import { TimelineHeaderComponent } from './timeline-header.component';
+import { TimelineControllerComponent } from './timeline-controller.component';
 
-describe('TimelineHeaderComponent', () => {
-  let fixture: ComponentFixture<TimelineHeaderComponent>;
-  let component: TimelineHeaderComponent;
+describe('TimelineControllerComponent', () => {
+  let fixture: ComponentFixture<TimelineControllerComponent>;
+  let component: TimelineControllerComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TimelineHeaderComponent],
+      imports: [TimelineControllerComponent],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TimelineHeaderComponent);
+    fixture = TestBed.createComponent(TimelineControllerComponent);
     component = fixture.componentInstance;
 
     // required input

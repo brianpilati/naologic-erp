@@ -6,13 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { TIMELINE_ZOOM_LEVEL_VALUES, TimelineZoomLevelType } from '../../../core/types/timeline-zoom-level.type';
 
 @Component({
-  selector: 'erp-timeline-header',
+  selector: 'erp-timeline-controller',
   standalone: true,
   imports: [CommonModule, NgSelectModule, FormsModule],
-  templateUrl: './timeline-header.component.html',
-  styleUrls: ['./timeline-header.component.scss']
+  templateUrl: './timeline-controller.component.html',
+  styleUrls: ['./timeline-controller.component.scss']
 })
-export class TimelineHeaderComponent {
+export class TimelineControllerComponent {
   @Input({ required: true }) zoomLevel!: TimelineZoomLevelType;
 
   @Output() zoomChange = new EventEmitter<TimelineZoomLevelType>();

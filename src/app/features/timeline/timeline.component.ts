@@ -7,7 +7,8 @@ import { WorkOrderService } from '../../core/services/work-order.service';
 import { WorkCenterDocument } from '../../core/models/work-center-document.model';
 import { WorkOrderDocument } from '../../core/models/work-order.model';
 import { TimelineZoomLevelType } from '../../core/types/timeline-zoom-level.type';
-import { TimelineHeaderComponent } from '../components/timeline-header/timeline-header.component';
+import { TimelineControllerComponent } from '../components/timeline-controller/timeline-controller.component';
+import { TimelineGridComponent } from '../components/timeline-grid/timeline-grid.component';
 
 // Presentation components
 /*
@@ -22,13 +23,13 @@ import { WorkOrderPanelComponent } from './components/work-order-panel/work-orde
   standalone: true,
   imports: [
     CommonModule,
-    TimelineHeaderComponent,
-    /*
+    TimelineControllerComponent,
     TimelineGridComponent,
+    /*
     WorkCenterRowComponent,
     WorkOrderPanelComponent,
     */
-    TimelineHeaderComponent
+    TimelineControllerComponent
   ],
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss']

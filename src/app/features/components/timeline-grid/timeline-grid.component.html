@@ -1,0 +1,17 @@
+<div class="timeline-grid" (click)="onGridClick($event)">
+  <!-- Timeline columns -->
+  <div class="timeline-grid-columns">
+    @for (column of columns; track column.startDate.getTime()) {
+      <div class="timeline-grid-column" [style.width.px]="column.widthPx">
+        <div class="timeline-grid-column-label">
+          {{ column.label }}
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Rows / bars will be projected here -->
+  <div class="timeline-grid-rows">
+    <ng-content />
+  </div>
+</div>

@@ -1,0 +1,45 @@
+@use 'global' as global;
+
+.timeline-grid {
+  position: relative;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-color: rgba(255, 255, 255, 1);
+
+  /* -----------------------------------
+ * Column headers
+ * ----------------------------------- */
+
+  .timeline-grid-columns {
+    display: flex;
+    flex-direction: row;
+    height: 33px;
+    background-color: rgba(255, 255, 255, 1);
+
+    .timeline-grid-column {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+
+      .timeline-grid-column-label {
+        width: 86px;
+        height: 16px;
+        color: rgba(104, 113, 150, 1);
+        font-family: global.$font-family-base;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+      }
+    }
+  }
+
+  /* -----------------------------------
+ * Rows container
+ * ----------------------------------- */
+
+  .timeline-grid-rows {
+    position: relative;
+  }
+}

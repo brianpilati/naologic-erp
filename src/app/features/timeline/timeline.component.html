@@ -1,20 +1,47 @@
 <div class="timeline">
+  <div class="naologic-container">
+    <img src="naologic.png" class="naologic-logo" />
+  </div>
+
   <!-- Header -->
-  <erp-timeline-header
-    class="timeline-header"
+  <erp-timeline-controller
+    class="timeline-controller"
     [zoomLevel]="timelineService.zoomLevel()"
     (zoomChange)="onZoomChange($event)" />
+
+  <div class="timeline-header">
+    <!-- Left: Work Centers (fixed) -->
+    <div class="timeline-left">
+      <div class="work-center-header">
+        <div class="work-center-header-label">Work Center</div>
+      </div>
+
+      <!-- @for (center of workCenters(); track center.docId) {
+        <div class="timeline-work-center">
+          {{ center.data.name }}
+        </div>
+      } -->
+    </div>
+
+    <erp-timeline-grid class="timeline-right" [columns]="timelineService.columns()" />
+  </div>
 
   <!-- Body -->
   <div class="timeline-body">
     <!-- Left: Work Centers (fixed) -->
     <div class="timeline-left">
-      @for (center of workCenters(); track center.docId) {
+      <div class="work-center-header">
+        <div class="work-center-header-label">Work Center</div>
+      </div>
+
+      <!-- @for (center of workCenters(); track center.docId) {
         <div class="timeline-work-center">
           {{ center.data.name }}
         </div>
-      }
+      } -->
     </div>
+
+    <erp-timeline-grid class="timeline-right" [columns]="timelineService.columns()" />
 
     <!-- Right: Timeline Grid (scrollable) -->
     <div class="timeline-right">
