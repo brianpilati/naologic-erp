@@ -100,12 +100,12 @@
 
 /* Status modifiers */
 .work-order-bar[data-status='open'] {
-  box-shadow: 0 0 0 1px rgba(229, 231, 235, 1); // neutral border
-  background-color: rgba(249, 250, 251, 1); // subtle neutral bg
+  box-shadow: 0 0 0 1px rgba(191, 219, 254, 1); // sky blue border
+  background-color: rgba(239, 246, 255, 1); // very light blue bg
 
   .work-order-status[data-status='open'] {
-    background-color: rgba(243, 244, 246, 1);
-    color: rgba(55, 65, 81, 1); // neutral text
+    background-color: rgba(219, 234, 254, 1); // blue pill
+    color: rgba(37, 99, 235, 1); // true blue text
   }
 }
 

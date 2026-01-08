@@ -1,0 +1,66 @@
+<!-- src/app/features/components/work-order-panel/work-order-panel.component.html -->
+<div class="work-order-panel-backdrop" aria-hidden="true"></div>
+
+<aside class="work-order-panel" role="dialog" aria-modal="true" aria-label="Work order panel">
+  <div class="work-order-panel-header">
+    <div class="work-order-panel-title">{{ title }}</div>
+
+    <button type="button" class="work-order-panel-close" (click)="onCancel()" aria-label="Close panel">✕</button>
+  </div>
+
+  <form class="work-order-panel-body" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Name -->
+    <div class="form-row">
+      <label class="form-label" for="wo-name">Work Order Name</label>
+      <input id="wo-name" class="form-input" type="text" formControlName="name" placeholder="Enter work order name" />
+
+      @if (ctrl('name').touched && ctrl('name').hasError('required')) {
+        <div class="form-error">Work order name is required.</div>
+      }
+    </div>
+
+    <!-- Status -->
+    <div class="form-row">
+      <label class="form-label" for="wo-status">Status</label>
+
+      <ng-select
+        id="wo-status"
+        class="form-select"
+        [items]="statusOptions"
+        [clearable]="false"
+        [searchable]="false"
+        formControlName="status">
+      </ng-select>
+
+      @if (ctrl('status').touched && ctrl('status').hasError('required')) {
+        <div class="form-error">Status is required.</div>
+      }
+    </div>
+
+    <!-- Dates -->
+    <div class="form-row-grid">
+      <div class="form-row">
+        <label class="form-label">Start Date</label>
+        <ngb-datepicker formControlName="start"></ngb-datepicker>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label">End Date</label>
+        <ngb-datepicker formControlName="end"></ngb-datepicker>
+      </div>
+    </div>
+
+    @if (dateError) {
+      <div class="form-error-block">{{ dateError }}</div>
+    }
+
+    @if (overlapError) {
+      <div class="form-error-block">{{ overlapError }}</div>
+    }
+
+    <div class="work-order-panel-footer">
+      <button type="button" class="btn-secondary" (click)="onCancel()">Cancel</button>
+      <button type="submit" class="btn-primary">{{ primaryCtaLabel }}</button>
+    </div>
+  </form>
+</aside>
