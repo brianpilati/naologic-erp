@@ -125,6 +125,13 @@ $workcenter-padding-left: 32px;
     }
   }
 }
+
+.panel-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 9, 41, 0.35);
+  z-index: 999;
+}
 /* -----------------------------------
  * Responsive considerations
  * ----------------------------------- */

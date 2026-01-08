@@ -10,6 +10,34 @@
 
 Total: 7 hours
 
+## @ng-bootstrap issues
+
+```bash
+npm install @ng-bootstrap/ng-bootstrap
+npm error code ERESOLVE
+npm error ERESOLVE unable to resolve dependency tree
+npm error
+npm error While resolving: naologic-erp@0.0.0
+npm error Found: @angular/common@20.3.16
+npm error node_modules/@angular/common
+npm error   @angular/common@"^20.3.0" from the root project
+npm error
+npm error Could not resolve dependency:
+npm error peer @angular/common@"^21.0.0" from @ng-bootstrap/ng-bootstrap@20.0.0
+npm error node_modules/@ng-bootstrap/ng-bootstrap
+npm error   @ng-bootstrap/ng-bootstrap@"*" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /Users/brianpilati/.npm/_logs/2026-01-08T19_34_44_214Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /Users/brianpilati/.npm/_logs/2026-01-08T19_34_44_214Z-debug-0.log
+
+```
+
 ## Prompt
 
 1.  How long do you think it will take us to complete this assignment in angular 20?

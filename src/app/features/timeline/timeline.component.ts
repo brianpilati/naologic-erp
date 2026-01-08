@@ -10,6 +10,7 @@ import { TimelineZoomLevelType } from '../../core/types/timeline-zoom-level.type
 import { TimelineControllerComponent } from '../components/timeline-controller/timeline-controller.component';
 import { TimelineGridComponent } from '../components/timeline-grid/timeline-grid.component';
 import { WorkOrderBarComponent } from '../components/work-order-bar/work-order-bar.component';
+import { WorkOrderPanelComponent } from '../components/work-order-panel/work-order-panel.component';
 
 // Presentation components
 /*
@@ -27,7 +28,8 @@ import { WorkOrderPanelComponent } from './components/work-order-panel/work-orde
     TimelineControllerComponent,
     TimelineGridComponent,
     WorkOrderBarComponent,
-    TimelineControllerComponent
+    TimelineControllerComponent,
+    WorkOrderPanelComponent
   ],
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss']
@@ -38,6 +40,8 @@ export class TimelineComponent {
   // --------------------------------------------------
 
   readonly isPanelOpen = signal(false);
+  readonly isPanelClosing = signal(false);
+  readonly isPanelOpening = signal(false);
   readonly panelMode = signal<'create' | 'edit'>('create');
   readonly selectedWorkOrder = signal<WorkOrderDocument | null>(null);
   readonly selectedWorkCenterId = signal<string | null>(null);
@@ -85,7 +89,7 @@ export class TimelineComponent {
     this.selectedWorkOrder.set(draft);
     this.selectedWorkCenterId.set(workCenterId);
     this.panelMode.set('create');
-    this.isPanelOpen.set(true);
+    this.openPanel();
   }
 
   // --------------------------------------------------
@@ -96,7 +100,7 @@ export class TimelineComponent {
     this.selectedWorkOrder.set(order);
     this.selectedWorkCenterId.set(order.data.workCenterId);
     this.panelMode.set('edit');
-    this.isPanelOpen.set(true);
+    this.openPanel();
   }
 
   onDelete(orderId: string): void {
@@ -124,11 +128,26 @@ export class TimelineComponent {
   // --------------------------------------------------
   // Helpers
   // --------------------------------------------------
+  openPanel(): void {
+    this.isPanelOpen.set(true);
+    this.isPanelClosing.set(false);
+    this.isPanelOpening.set(true);
 
-  private closePanel(): void {
-    this.isPanelOpen.set(false);
-    this.selectedWorkOrder.set(null);
-    this.selectedWorkCenterId.set(null);
+    // allow DOM to paint before adding open class
+    requestAnimationFrame(() => {
+      this.isPanelOpening.set(false);
+    });
+  }
+
+  closePanel(): void {
+    this.isPanelClosing.set(true);
+
+    setTimeout(() => {
+      this.isPanelOpen.set(false);
+      this.isPanelClosing.set(false);
+      this.selectedWorkOrder.set(null);
+      this.selectedWorkCenterId.set(null);
+    }, 240);
   }
 
   /**

@@ -39,12 +39,12 @@
 
   <!-- Slide-out Create/Edit Panel -->
   @if (isPanelOpen()) {
-    app-work-order-panel
-    <!-- <app-work-order-panel
-    [mode]="panelMode()"
-    [initialOrder]="selectedWorkOrder()"
-    (save)="onSave($event)"
-    (close)="onCancel()"
-  /> -->
+    <div class="panel-backdrop" [class.is-closing]="isPanelClosing()" (click)="closePanel()"></div>
+
+    <erp-work-order-panel
+      class="work-order-panel"
+      [class.is-open]="!isPanelOpening() && !isPanelClosing()"
+      [class.is-closing]="isPanelClosing()"
+      (close)="closePanel()" />
   }
 </div>
