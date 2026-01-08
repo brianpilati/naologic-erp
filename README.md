@@ -1,59 +1,223 @@
-# NaologicErp
+# Naologic ERP – Timeline Prototype
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.7.
+This project was created by **Brian Pilati** as part of the **Naologic ERP take-home exam**.
 
-## Development server
+It demonstrates a production-quality Angular application focused on:
 
-To start a local development server, run:
+- Clean architecture
+- Strong typing
+- Deterministic date math
+- High test coverage
+- Enforced linting, formatting, and coverage gates
 
-```bash
-ng serve
-```
+The core feature is an interactive **Work Order Timeline** with zoom levels, drag-free creation, and visual status representation.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Tech Stack
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Angular 20 (Standalone Components)**
+- **TypeScript**
+- **Angular Signals**
+- **Angular Material**
+- **SCSS (Design-token driven)**
+- **Jasmine + Karma**
+- **ESLint + Prettier**
+- **Husky + lint-staged**
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Getting Started
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Install dependencies
 
 ```bash
-ng test
+npm install
 ```
 
-## Running end-to-end tests
+> **Note:** Node 18+ recommended.
 
-For end-to-end (e2e) testing, run:
+---
+
+### Run the application
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The app will be available at:
 
-## Additional Resources
+```
+http://localhost:4200
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+### Build the application
+
+```bash
+npm run build
+```
+
+---
+
+## Testing
+
+### Run unit tests (watch mode)
+
+```bash
+npm test
+```
+
+### Run tests with coverage (CI-style)
+
+```bash
+npm run test:coverage
+```
+
+Coverage reports are generated in:
+
+```
+/coverage
+```
+
+### Clean coverage output
+
+```bash
+npm run test:coverage:clean
+```
+
+---
+
+## Linting & Formatting
+
+### Run ESLint
+
+```bash
+npm run lint
+```
+
+### Format all files
+
+```bash
+npm run format:all
+```
+
+### Check formatting only (CI-safe)
+
+```bash
+npm run format:check
+```
+
+### Auto-fix formatting on staged files
+
+```bash
+npm run format:fix
+```
+
+---
+
+## Development Watch Mode
+
+```bash
+npm run watch
+```
+
+Rebuilds automatically on file changes.
+
+---
+
+## Clean Build Artifacts
+
+```bash
+npm run clean
+```
+
+Removes:
+
+- `dist/`
+- Angular cache
+- Coverage output
+
+---
+
+## Git Hooks (Husky)
+
+This project uses **Husky** to enforce quality gates **before code ever reaches CI**.
+
+### Pre-Commit Hook
+
+Runs on every commit:
+
+```bash
+echo "Running lint + format pre-commit..."
+
+npx lint-staged || {
+  printf "\n\nERROR: Lint issues were found in the committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+npm run format:fix || {
+  printf "\n\nERROR: Format:fix issues were found in the committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+echo "Pre-commit checks complete."
+```
+
+Ensures:
+
+- No lint violations
+- Consistent formatting
+- Only staged files are affected
+
+---
+
+### Pre-Push Hook
+
+Runs before any push to a remote branch:
+
+```bash
+echo "Running library coverage before push..."
+
+npm run test:coverage:clean
+
+npm run test:coverage || {
+  printf "\n\nERROR: Test Coverage issues were found in the committed files. Please address them before proceeding.\n\n\n\n"
+  exit 1
+}
+
+echo "Pre-push checks complete."
+```
+
+Ensures:
+
+- All tests pass
+- Coverage is enforced
+- Broken code never reaches shared branches
+
+---
+
+## Design Notes
+
+- `TimelineService` centralizes all date math and pixel calculations
+- Signals replace traditional RxJS state where appropriate
+- Standalone components only
+- No magic numbers – all layout values are tokenized
+- 100% unit test coverage on core logic and components
+- Explicit separation of layout vs. domain logic
+
+---
+
+## Final Notes
+
+This project intentionally prioritizes:
+
+- Pixel-Perfect over functionality
+- Readability over cleverness
+- Predictable behavior over abstraction
+- Reviewability over framework complexity
+
+Thank you for the opportunity to complete the Naologic ERP take-home exam.
+
+— **Brian Pilati**

@@ -1,186 +1,247 @@
-import { provideZonelessChangeDetection, signal } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { WorkCenterDocument } from '../../core/models/work-center-document.model';
-import { WorkOrderDocument } from '../../core/models/work-order.model';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TimelineComponent } from './timeline.component';
+
 import { TimelineService } from '../../core/services/timeline.service';
 import { WorkOrderService } from '../../core/services/work-order.service';
-import { TimelineComponent } from './timeline.component';
+
+import { provideZonelessChangeDetection, signal } from '@angular/core';
+import { TimelineColumn } from '../../core/models/timeline-column.model';
+import { WorkCenterDocument } from '../../core/models/work-center-document.model';
+import { WorkOrderDocument } from '../../core/models/work-order.model';
+import { TimelineZoomLevelType } from '../../core/types/timeline-zoom-level.type';
 
 describe('TimelineComponent', () => {
   let component: TimelineComponent;
-  let timelineService: jasmine.SpyObj<TimelineService>;
-  let workOrderService: jasmine.SpyObj<WorkOrderService>;
+  let fixture: ComponentFixture<TimelineComponent>;
 
-  const workCenter: WorkCenterDocument = {
-    docId: 'wc-1',
-    docType: 'workCenter',
-    data: { name: 'Assembly Line' }
+  let workOrderServiceSpy: jasmine.SpyObj<WorkOrderService>;
+
+  const columnsSignal = signal<TimelineColumn[]>([]);
+
+  const timelineServiceMock: Partial<TimelineService> = {
+    zoomLevel: signal('day'),
+    columns: columnsSignal,
+    setZoomLevel: jasmine.createSpy('setZoomLevel'),
+    dateToX: jasmine.createSpy('dateToX').and.returnValue(0),
+    xToDate: jasmine.createSpy('xToDate').and.returnValue(new Date())
   };
 
-  const workOrder: WorkOrderDocument = {
+  const mockWorkCenters: WorkCenterDocument[] = [
+    { docId: 'wc-1', data: { name: 'Center 1' } } as WorkCenterDocument,
+    { docId: 'wc-2', data: { name: 'Center 2' } } as WorkCenterDocument
+  ];
+
+  const mockOrder: WorkOrderDocument = {
     docId: 'wo-1',
-    docType: 'workOrder',
     data: {
-      name: 'Test Order',
-      workCenterId: 'wc-1',
+      name: 'Order 1',
       status: 'open',
-      startDate: '2025-01-01',
-      endDate: '2025-01-05'
+      startDate: new Date(2025, 0, 1),
+      endDate: new Date(2025, 0, 8),
+      workCenterId: 'wc-1'
     }
-  };
+  } as any;
 
-  beforeEach(() => {
-    timelineService = jasmine.createSpyObj<TimelineService>('TimelineService', ['setZoomLevel']);
+  beforeAll(() => {
+    jasmine.clock().install();
+  });
 
-    workOrderService = jasmine.createSpyObj<WorkOrderService>(
-      'WorkOrderService',
-      ['create', 'update', 'delete', 'createDraft', 'workOrdersByCenter'],
-      {
-        workCenters: signal<WorkCenterDocument[]>([workCenter]),
-        workOrders: signal<WorkOrderDocument[]>([workOrder])
-      }
+  afterAll(() => {
+    jasmine.clock().uninstall();
+  });
+
+  beforeEach(async () => {
+    workOrderServiceSpy = jasmine.createSpyObj<WorkOrderService>('WorkOrderService', [
+      'workCenters',
+      'workOrders',
+      'createDraft',
+      'create',
+      'update',
+      'delete',
+      'workOrdersByCenter'
+    ]);
+
+    workOrderServiceSpy.workCenters.and.returnValue(mockWorkCenters);
+    workOrderServiceSpy.workOrders.and.returnValue([mockOrder]);
+    workOrderServiceSpy.workOrdersByCenter.and.returnValue([mockOrder]);
+
+    workOrderServiceSpy.createDraft.and.callFake(
+      (workCenterId: string, start: Date, end: Date) =>
+        ({
+          docId: 'draft',
+          data: {
+            name: '',
+            status: 'open',
+            startDate: start,
+            endDate: end,
+            workCenterId
+          }
+        }) as any
     );
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [TimelineComponent],
       providers: [
         provideZonelessChangeDetection(),
-        { provide: TimelineService, useValue: timelineService },
-        { provide: WorkOrderService, useValue: workOrderService }
+        { provide: TimelineService, useValue: timelineServiceMock },
+        { provide: WorkOrderService, useValue: workOrderServiceSpy }
       ]
-    });
+    }).compileComponents();
 
-    const fixture = TestBed.createComponent(TimelineComponent);
+    fixture = TestBed.createComponent(TimelineComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  // --------------------------------------------------
-  // Instantiation
-  // --------------------------------------------------
-
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
   // --------------------------------------------------
-  // Computed signals
+  // Derived state
   // --------------------------------------------------
 
-  it('should expose workCenters from WorkOrderService', () => {
-    expect(component.workCenters()).toEqual([workCenter]);
+  it('should expose work centers via computed signal', () => {
+    expect(component.workCenters()).toEqual(mockWorkCenters);
   });
 
-  it('should expose workOrders from WorkOrderService', () => {
-    expect(component.workOrders()).toEqual([workOrder]);
+  it('should expose work orders via computed signal', () => {
+    expect(component.workOrders()).toEqual([mockOrder]);
   });
 
   // --------------------------------------------------
-  // Zoom change
+  // Zoom interaction
   // --------------------------------------------------
 
   it('should forward zoom changes to TimelineService', () => {
-    component.onZoomChange('week');
-    expect(timelineService.setZoomLevel).toHaveBeenCalledWith('week');
+    const zoom: TimelineZoomLevelType = 'week';
+    component.onZoomChange(zoom);
+    expect(timelineServiceMock.setZoomLevel).toHaveBeenCalledWith(zoom);
   });
 
   // --------------------------------------------------
-  // Create interaction
+  // Create flow
   // --------------------------------------------------
 
-  it('should open panel in create mode when creating at a date', () => {
-    const draft: WorkOrderDocument = { ...workOrder, docId: 'draft' };
+  it('should open create panel when creating at a date', () => {
+    const date = new Date(2025, 0, 10);
 
-    workOrderService.createDraft.and.returnValue(draft);
-
-    const date = new Date(2025, 0, 1);
+    spyOn(component, 'openPanel').and.callThrough();
 
     component.onCreateAt(date, 'wc-1');
 
-    expect(workOrderService.createDraft).toHaveBeenCalled();
-    expect(component.selectedWorkOrder()).toBe(draft);
+    expect(workOrderServiceSpy.createDraft).toHaveBeenCalled();
     expect(component.selectedWorkCenterId()).toBe('wc-1');
     expect(component.panelMode()).toBe('create');
-    expect(component.isPanelOpen()).toBeTrue();
+    expect(component.selectedWorkOrder()).toBeTruthy();
+    expect(component.openPanel).toHaveBeenCalled();
   });
 
   // --------------------------------------------------
-  // Edit interaction
+  // Edit flow
   // --------------------------------------------------
 
-  it('should open panel in edit mode when editing a work order', () => {
-    component.onEdit(workOrder);
+  it('should open edit panel for existing order', () => {
+    spyOn(component, 'openPanel').and.callThrough();
 
-    expect(component.selectedWorkOrder()).toBe(workOrder);
+    component.onEdit(mockOrder);
+
+    expect(component.selectedWorkOrder()).toBe(mockOrder);
     expect(component.selectedWorkCenterId()).toBe('wc-1');
     expect(component.panelMode()).toBe('edit');
-    expect(component.isPanelOpen()).toBeTrue();
+    expect(component.openPanel).toHaveBeenCalled();
   });
 
   // --------------------------------------------------
-  // Delete interaction
+  // Delete flow
   // --------------------------------------------------
 
-  it('should delete a work order by id', () => {
+  it('should delete a work order', () => {
     component.onDelete('wo-1');
-    expect(workOrderService.delete).toHaveBeenCalledWith('wo-1');
+    expect(workOrderServiceSpy.delete).toHaveBeenCalledWith('wo-1');
   });
 
   // --------------------------------------------------
-  // Save (create branch)
+  // Save flow
   // --------------------------------------------------
 
-  it('should create a work order when saving in create mode', () => {
+  it('should create a work order when in create mode', () => {
     component.panelMode.set('create');
-    component.isPanelOpen.set(true);
 
-    component.onSave(workOrder);
+    spyOn(component, 'closePanel').and.callThrough();
 
-    expect(workOrderService.create).toHaveBeenCalledWith(workOrder);
-    expect(component.isPanelOpen()).toBeFalse();
-    expect(component.selectedWorkOrder()).toBeNull();
+    component.onSave(mockOrder);
+
+    expect(workOrderServiceSpy.create).toHaveBeenCalledWith(mockOrder);
+    expect(component.closePanel).toHaveBeenCalled();
   });
 
-  // --------------------------------------------------
-  // Save (edit branch)
-  // --------------------------------------------------
-
-  it('should update a work order when saving in edit mode', () => {
+  it('should update a work order when in edit mode', () => {
     component.panelMode.set('edit');
-    component.isPanelOpen.set(true);
 
-    component.onSave(workOrder);
+    spyOn(component, 'closePanel').and.callThrough();
 
-    expect(workOrderService.update).toHaveBeenCalledWith(workOrder);
-    expect(component.isPanelOpen()).toBeFalse();
-    expect(component.selectedWorkOrder()).toBeNull();
+    component.onSave(mockOrder);
+
+    expect(workOrderServiceSpy.update).toHaveBeenCalledWith(mockOrder);
+    expect(component.closePanel).toHaveBeenCalled();
   });
 
   // --------------------------------------------------
-  // Cancel / close panel
+  // Cancel flow
   // --------------------------------------------------
 
   it('should close panel on cancel', () => {
+    spyOn(component, 'closePanel').and.callThrough();
+    component.onCancel();
+    expect(component.closePanel).toHaveBeenCalled();
+  });
+
+  // --------------------------------------------------
+  // Panel open animation
+  // --------------------------------------------------
+
+  it('should open panel with opening animation flags', () => {
+    spyOn(window, 'requestAnimationFrame').and.callFake((cb) => {
+      cb(0);
+      return 0;
+    });
+
+    component.openPanel();
+
+    expect(component.isPanelOpen()).toBeTrue();
+    expect(component.isPanelOpening()).toBeFalse();
+    expect(component.isPanelClosing()).toBeFalse();
+  });
+
+  // --------------------------------------------------
+  // Panel close animation
+  // --------------------------------------------------
+
+  it('should close panel after animation duration', () => {
     component.isPanelOpen.set(true);
-    component.selectedWorkOrder.set(workOrder);
+    component.selectedWorkOrder.set(mockOrder);
     component.selectedWorkCenterId.set('wc-1');
 
-    component.onCancel();
+    component.closePanel();
+
+    expect(component.isPanelClosing()).toBeTrue();
+
+    jasmine.clock().tick(240);
 
     expect(component.isPanelOpen()).toBeFalse();
+    expect(component.isPanelClosing()).toBeFalse();
     expect(component.selectedWorkOrder()).toBeNull();
     expect(component.selectedWorkCenterId()).toBeNull();
   });
 
   // --------------------------------------------------
-  // Helper
+  // Helpers
   // --------------------------------------------------
 
   it('should return work orders for a given work center', () => {
-    workOrderService.workOrdersByCenter.and.returnValue([workOrder]);
-
-    const result = component.workOrdersForCenter(workCenter);
-
-    expect(workOrderService.workOrdersByCenter).toHaveBeenCalledWith('wc-1');
-    expect(result).toEqual([workOrder]);
+    const result = component.workOrdersForCenter(mockWorkCenters[0]);
+    expect(workOrderServiceSpy.workOrdersByCenter).toHaveBeenCalledWith('wc-1');
+    expect(result).toEqual([mockOrder]);
   });
 });

@@ -7,8 +7,49 @@
 3. 2025-01-07 - 2 hours
 4. 2025-01-07 - 1.5 hours
 5. 2025-01-08 - 2 hours
+6. 2025-01-08 - 1 hours
 
-Total: 7 hours
+Total: 8 hours
+
+## Rubric
+
+| Criteria              | Sub-Criteria           | Possible | 7 hrs | 8 hrs | Reasone                                                            |
+| --------------------- | ---------------------- | -------- | ----- | ----- | ------------------------------------------------------------------ |
+| Design Implementation |
+|                       | Pixel-Perfect          | 25       | 25    | 25    | I spend a majority of my time on sketch                            |
+|                       | Responsive Behavior    | 10       | 0     | 0     | Does not respond to mobile (groundwork)                            |
+|                       | Visual Polish          | 5        | 5     | 5     | It looks like sketch                                               |
+|                       | Total                  | 40       | 30    | 30    |
+| Functionality         |
+|                       | Core features          | 25       | 5     | 5     | High hopes and potential only                                      |
+|                       | Interactions           | 10       | 2     | 5     | @ng-bootstrap was an issue                                         |
+|                       | Edge cases             | 5        | 0     | 0     | Didn't even get to the cases                                       |
+|                       | Total                  | 40       | 7     | 10    |
+| Code Quality          |
+|                       | Angular Best Practices | 8        | 8     | 8     | Yes, yes, yes                                                      |
+|                       | Clean Code             | 7        | 7     | 7     | Yes, yes, yes                                                      |
+|                       | Communication          | 5        | 4     | 4     | I do not document while refactoring                                |
+|                       | Total                  | 20       | 19    | 19    |
+| Total Base Score      |
+|                       |                        | 100      | 56    | 59    | Might of just saved you 9 minutes                                  |
+| Bonus Points          |
+|                       |                        |          | 5.5   | 5.5   | See below                                                          |
+| Total Score           |
+|                       |                        | 100      | 61.5  | 64.5  | Interesting dichtonomy between pixels and features. I chose pixels |
+
+| Bonus Points            | Yes/No/Horseshoe close | Reason                                                        |
+| ----------------------- | ---------------------- | ------------------------------------------------------------- |
+| Local Storage           | No                     |                                                               |
+| Automated Tests         | Yes                    | 100% Jasmine Test coverage. This is important for refactoring |
+| Animations and Polish   | Horseshoe close        |                                                               |
+| Infinite Scroll         | No                     |                                                               |
+| Today button navigation | No                     |                                                               |
+| Tooltip on bar hover    | Yes                    | MattoolTip was not possible because it was too jumpy.         |
+| Accessbility Features   | Horseshoe close        | Added a few                                                   |
+| AI prompt documentation | Yes                    | ai-prompts.md                                                 |
+| Clean git history       | Yes                    | https://github.com/brianpilati/naologic-erp                   |
+| Meaningful Comments     | Horseshoe close        | This is relative. I can always improve ;)                     |
+| Total                   | 5.5/10                 | I counted "horseshoe close" as .5                             |
 
 ## @ng-bootstrap issues
 
