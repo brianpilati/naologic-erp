@@ -49,7 +49,7 @@ describe('TimelineGridComponent', () => {
   });
 
   it('should emit createAt with x offset when grid is clicked', () => {
-    const emitted: { x: number }[] = [];
+    const emitted: number[] = [];
 
     component.createAt.subscribe((value) => emitted.push(value));
 
@@ -59,7 +59,7 @@ describe('TimelineGridComponent', () => {
 
     component.onGridClick(fakeEvent);
 
-    expect(emitted).toEqual([{ x: 123 }]);
+    expect(emitted).toEqual([123]);
   });
 
   it('should project content into the grid rows slot', () => {

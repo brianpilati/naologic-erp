@@ -1,0 +1,140 @@
+@use 'global' as global;
+
+.work-order-bar {
+  position: absolute;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-radius: 8px;
+
+  font-family: global.$font-family-base;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+
+  cursor: pointer;
+  user-select: none;
+
+  // prevents super tiny orders from collapsing visually
+  min-width: 24px;
+
+  &:hover {
+    filter: brightness(0.98);
+
+    .status-container {
+      .work-order-action {
+        .hover-icon {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .work-order-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 18px;
+    margin-left: 8px;
+
+    color: rgba(3, 9, 41, 1);
+    font-family: global.$font-family-base;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: book;
+  }
+
+  .status-container {
+    width: 123px;
+    display: flex;
+
+    .work-order-status {
+      width: 87px;
+      height: 22px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .work-order-status-label {
+        width: 71px;
+        height: 18px;
+        font-family: global.$font-family-base;
+        font-size: 14px;
+        font-weight: 400;
+        font-style: book;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: capitalize;
+      }
+    }
+
+    .work-order-action {
+      border: none;
+      background: none;
+      margin-left: 4px;
+      margin-right: 8px;
+      width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+
+      cursor: pointer;
+
+      .hover-icon {
+        display: none;
+        width: 24px;
+        height: 22px;
+        border-radius: 5px;
+        background-color: rgba(216, 220, 235, 1);
+      }
+    }
+  }
+}
+
+/* Status modifiers */
+.work-order-bar[data-status='open'] {
+  box-shadow: 0 0 0 1px rgba(229, 231, 235, 1); // neutral border
+  background-color: rgba(249, 250, 251, 1); // subtle neutral bg
+
+  .work-order-status[data-status='open'] {
+    background-color: rgba(243, 244, 246, 1);
+    color: rgba(55, 65, 81, 1); // neutral text
+  }
+}
+
+.work-order-bar[data-status='in-progress'] {
+  box-shadow: 0 0 0 1px rgba(222, 224, 255, 1);
+  background-color: rgba(237, 238, 255, 1);
+
+  .work-order-status[data-status='in-progress'] {
+    background-color: rgba(214, 216, 255, 1);
+    color: rgba(62, 64, 219, 1);
+  }
+}
+
+.work-order-bar[data-status='complete'] {
+  box-shadow: 0 0 0 1px rgba(209, 250, 179, 1);
+  background-color: rgba(248, 255, 243, 1);
+
+  .work-order-status[data-status='complete'] {
+    background-color: rgba(225, 255, 204, 1);
+    color: rgba(8, 162, 104, 1);
+  }
+}
+
+.work-order-bar[data-status='blocked'] {
+  box-shadow: 0 0 0 1px rgba(255, 245, 207, 1);
+  background-color: rgba(255, 252, 241, 1);
+
+  .work-order-status[data-status='blocked'] {
+    background-color: rgba(252, 238, 181, 1);
+    color: rgba(177, 54, 0, 1);
+  }
+}

@@ -14,8 +14,9 @@
   .timeline-grid-columns {
     display: flex;
     flex-direction: row;
-    height: 33px;
+    height: global.$grid-header-height;
     background-color: rgba(255, 255, 255, 1);
+    border-bottom: 1px solid rgba(230, 235, 240, 1);
 
     .timeline-grid-column {
       display: flex;

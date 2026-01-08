@@ -9,6 +9,7 @@ import { WorkOrderDocument } from '../../core/models/work-order.model';
 import { TimelineZoomLevelType } from '../../core/types/timeline-zoom-level.type';
 import { TimelineControllerComponent } from '../components/timeline-controller/timeline-controller.component';
 import { TimelineGridComponent } from '../components/timeline-grid/timeline-grid.component';
+import { WorkOrderBarComponent } from '../components/work-order-bar/work-order-bar.component';
 
 // Presentation components
 /*
@@ -25,10 +26,7 @@ import { WorkOrderPanelComponent } from './components/work-order-panel/work-orde
     CommonModule,
     TimelineControllerComponent,
     TimelineGridComponent,
-    /*
-    WorkCenterRowComponent,
-    WorkOrderPanelComponent,
-    */
+    WorkOrderBarComponent,
     TimelineControllerComponent
   ],
   templateUrl: './timeline.component.html',

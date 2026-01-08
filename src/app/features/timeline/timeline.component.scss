@@ -10,7 +10,6 @@ $workcenter-padding-left: 32px;
   max-width: 1440px;
   margin: 0 auto;
   padding-left: $padding-left;
-  border: 1px solid red;
 
   .naologic-container {
     width: 100%;
@@ -32,29 +31,39 @@ $workcenter-padding-left: 32px;
  * ----------------------------------- */
 
   .timeline-controller {
-    border: 1px solid red;
     flex: 0 0 auto;
     margin-bottom: 29px;
   }
 
-  .timeline-header {
-    border: 1px solid red;
+  .timeline-body {
     display: flex;
-    flex-direction: row;
+    flex: 1 1 auto;
+    min-height: 0; // allows proper scrolling
+    border: 1px solid rgba(230, 235, 240, 1);
+
+    .timeline-left,
+    .timeline-right {
+      .timeline-row {
+        height: global.$grid-row-height;
+        background-color: rgba(255, 255, 255, 1);
+        border-bottom: 1px solid rgba(230, 235, 240, 1);
+      }
+    }
 
     .timeline-left {
       width: 380px;
       background-color: global.$color-white;
 
       .work-center-header {
-        width: calc(380px - #{$workcenter-padding-left});
-        height: 33px;
+        width: calc(380px - #{$workcenter-padding-left} - 2px);
+        height: global.$grid-header-height;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         padding-left: $workcenter-padding-left;
-        border: 1px solid rgba(230, 235, 240, 1);
+        border-right: 1px solid rgba(230, 235, 240, 1);
+        border-bottom: 1px solid rgba(230, 235, 240, 1);
 
         .work-center-header-label {
           width: 138px;
@@ -65,6 +74,29 @@ $workcenter-padding-left: 32px;
           font-weight: 500;
         }
       }
+
+      .timeline-row {
+        display: flex;
+        align-items: center;
+
+        width: calc(380px - #{$workcenter-padding-left} - 2px);
+        border-right: 1px solid rgba(230, 235, 240, 1);
+
+        padding-left: $workcenter-padding-left;
+
+        color: rgba(3, 9, 41, 1);
+        font-family: global.$font-family-base;
+        font-size: 14px;
+        font-weight: 500;
+
+        &:hover {
+          background-color: global.$color-bg-muted;
+        }
+
+        &:nth-child(2) {
+          height: global.$grid-row-today-height;
+        }
+      }
     }
 
     .timeline-right {
@@ -72,55 +104,25 @@ $workcenter-padding-left: 32px;
       overflow: hidden; // grid manages scroll
       position: relative;
       background-color: global.$color-white;
-    }
-  }
 
-  /* -----------------------------------
- * Body Layout
- * ----------------------------------- */
+      .timeline-row {
+        position: relative; // REQUIRED for absolute-positioned bars
 
-  .timeline-body {
-    display: flex;
-    flex: 1 1 auto;
-    min-height: 0; // allows proper scrolling
-    border: 1px solid rgba(230, 235, 240, 1);
+        // click target for createAt
+        cursor: pointer;
 
-    /* -----------------------------------
- * Left Panel (Work Centers)
- * ----------------------------------- */
+        // keeps bars from bleeding into adjacent rows
+        overflow: hidden;
 
-    .timeline-work-center {
-      width: calc(380px - #{$workcenter-padding-left});
-      height: 48px;
-      background-color: rgba(255, 255, 255, 1);
+        &:hover {
+          background-color: rgba(249, 250, 251, 1);
+        }
 
-      padding-left: $workcenter-padding-left;
-
-      color: rgba(3, 9, 41, 1);
-      font-family: global.$font-family-base;
-      font-size: 14px;
-      font-weight: 500;
-
-      display: flex;
-      align-items: center;
-
-      border: 1px solid rgba(230, 235, 240, 1);
-
-      &:hover {
-        background-color: global.$color-bg-muted;
+        &:first-child {
+          height: global.$grid-row-today-height;
+        }
       }
     }
-  }
-
-  /* -----------------------------------
- * Right Panel (Timeline Grid)
- * ----------------------------------- */
-
-  .timeline-right {
-    flex: 1 1 auto;
-    overflow: hidden; // grid manages scroll
-    position: relative;
-    background-color: global.$color-white;
   }
 }
 /* -----------------------------------

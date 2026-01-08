@@ -1,0 +1,31 @@
+<div
+  class="work-order-bar"
+  [attr.data-status]="status"
+  [style.left.px]="leftPx()"
+  [style.width.px]="widthPx()"
+  [style.top.px]="topPx">
+  <div class="work-order-label">{{ name }}</div>
+
+  <div class="status-container">
+    <div [attr.data-status]="status" class="work-order-status">
+      <div class="work-order-status-label">
+        {{ status }}
+      </div>
+    </div>
+
+    <button
+      mat-icon-button
+      class="work-order-action"
+      [matMenuTriggerFor]="menu"
+      (click)="$event.stopPropagation()"
+      aria-label="Work order actions">
+      <img class="hover-icon" src="hover.png" />
+    </button>
+
+    <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
+      <button mat-menu-item (click)="onEdit($event)">Edit</button>
+
+      <button mat-menu-item (click)="onDelete($event)">Delete</button>
+    </mat-menu>
+  </div>
+</div>

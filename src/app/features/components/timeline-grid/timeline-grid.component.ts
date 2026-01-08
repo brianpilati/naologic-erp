@@ -20,13 +20,9 @@ export class TimelineGridComponent {
    * Emitted when user clicks empty timeline space
    * (hooked up later for create flow)
    */
-  @Output() createAt = new EventEmitter<{
-    x: number;
-  }>();
+  @Output() createAt = new EventEmitter<number>();
 
   onGridClick(event: MouseEvent): void {
-    this.createAt.emit({
-      x: event.offsetX
-    });
+    this.createAt.emit(event.offsetX);
   }
 }

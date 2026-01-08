@@ -1,6 +1,30 @@
+@use '@angular/material' as mat;
 @use 'global' as global;
 
 @import '@ng-select/ng-select/themes/default.theme.css';
+
+/*
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+}
+  */
 
 body {
   font-family: global.$font-family-base;
@@ -67,5 +91,20 @@ ng-dropdown-panel.ng-dropdown-panel.timeline-header-select .ng-option.ng-option-
         border-color: rgba(62, 64, 219, 1) transparent transparent;
       }
     }
+  }
+}
+
+.cdk-overlay-container {
+  z-index: 1000;
+
+  .cdk-overlay-pane {
+    z-index: 1000;
+    .mat-mdc-menu-panel {
+      background-color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  .mat-mdc-menu-item {
+    cursor: progress !important;
   }
 }

@@ -9,58 +9,32 @@
     [zoomLevel]="timelineService.zoomLevel()"
     (zoomChange)="onZoomChange($event)" />
 
-  <div class="timeline-header">
-    <!-- Left: Work Centers (fixed) -->
-    <div class="timeline-left">
-      <div class="work-center-header">
-        <div class="work-center-header-label">Work Center</div>
-      </div>
-
-      <!-- @for (center of workCenters(); track center.docId) {
-        <div class="timeline-work-center">
-          {{ center.data.name }}
-        </div>
-      } -->
-    </div>
-
-    <erp-timeline-grid class="timeline-right" [columns]="timelineService.columns()" />
-  </div>
-
-  <!-- Body -->
   <div class="timeline-body">
-    <!-- Left: Work Centers (fixed) -->
     <div class="timeline-left">
       <div class="work-center-header">
         <div class="work-center-header-label">Work Center</div>
       </div>
 
-      <!-- @for (center of workCenters(); track center.docId) {
-        <div class="timeline-work-center">
+      @for (center of workCenters(); track center.docId) {
+        <div class="timeline-row">
           {{ center.data.name }}
         </div>
-      } -->
+      }
     </div>
 
-    <erp-timeline-grid class="timeline-right" [columns]="timelineService.columns()" />
-
-    <!-- Right: Timeline Grid (scrollable) -->
-    <div class="timeline-right">
-      app-timeline-grid
-      <!-- <app-timeline-grid
-        [columns]="timelineService.columns()"
-        (createAt)="onCreateAt($event.date, $event.workCenterId)"
-      >
-        @for (center of workCenters(); track center.docId) {
-          <app-work-center-row
-            [workCenter]="center"
-            [orders]="workOrdersForCenter(center)"
-            (edit)="onEdit($event)"
-            (delete)="onDelete($event)"
-          />
-        }
-      </app-timeline-grid>
-           -->
-    </div>
+    <erp-timeline-grid class="timeline-right" [columns]="timelineService.columns()">
+      @for (center of workCenters(); track center.docId; let index = $index) {
+        <div class="timeline-row" (click)="onCreateAt(timelineService.xToDate($event.offsetX), center.docId)">
+          @for (order of workOrdersForCenter(center); track order.docId) {
+            <erp-work-order-bar
+              [order]="order"
+              (edit)="onEdit(order)"
+              (delete)="onDelete(order.docId)"
+              [topPx]="index === 0 ? 12 : 6" />
+          }
+        </div>
+      }
+    </erp-timeline-grid>
   </div>
 
   <!-- Slide-out Create/Edit Panel -->
