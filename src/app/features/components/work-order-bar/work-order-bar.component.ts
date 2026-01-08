@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, computed } from '@angular/core';
 
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { WorkOrderDocument } from '../../../core/models/work-order.model';
 import { TimelineService } from '../../../core/services/timeline.service';
 
@@ -45,13 +45,15 @@ export class WorkOrderBarComponent {
     return Math.max(24, right - left); // minimum width for usability
   });
 
-  onEdit(event?: MouseEvent): void {
-    event?.stopPropagation();
+  onEdit(event: MouseEvent, trigger: MatMenuTrigger): void {
+    event.stopPropagation();
+    trigger.closeMenu();
     this.edit.emit();
   }
 
-  onDelete(event?: MouseEvent): void {
-    event?.stopPropagation();
+  onDelete(event: MouseEvent, trigger: MatMenuTrigger): void {
+    event.stopPropagation();
+    trigger.closeMenu();
     this.delete.emit();
   }
 

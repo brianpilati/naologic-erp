@@ -78,41 +78,40 @@ describe('WorkOrderBarComponent', () => {
   // --------------------------------------------------
   // Outputs
   // --------------------------------------------------
+  describe('outputs', () => {
+    let menuClosed: boolean;
+    let trigger: any;
 
-  it('should emit edit and stop propagation', () => {
-    const emitSpy = spyOn(component.edit, 'emit');
-    const event = jasmine.createSpyObj<MouseEvent>('MouseEvent', ['stopPropagation']);
+    beforeEach(() => {
+      menuClosed = false;
+      trigger = {
+        closeMenu: () => {
+          menuClosed = true;
+        }
+      } as any;
+    });
 
-    component.onEdit(event);
+    it('should emit edit and stop propagation', () => {
+      const emitSpy = spyOn(component.edit, 'emit');
+      const event = jasmine.createSpyObj<MouseEvent>('MouseEvent', ['stopPropagation']);
 
-    expect(event.stopPropagation).toHaveBeenCalled();
-    expect(emitSpy).toHaveBeenCalledTimes(1);
-  });
+      component.onEdit(event, trigger);
 
-  it('should emit delete and stop propagation', () => {
-    const emitSpy = spyOn(component.delete, 'emit');
-    const event = jasmine.createSpyObj<MouseEvent>('MouseEvent', ['stopPropagation']);
+      expect(event.stopPropagation).toHaveBeenCalled();
+      expect(emitSpy).toHaveBeenCalledTimes(1);
+      expect(menuClosed).toBeTrue();
+    });
 
-    component.onDelete(event);
+    it('should emit delete and stop propagation', () => {
+      const emitSpy = spyOn(component.delete, 'emit');
+      const event = jasmine.createSpyObj<MouseEvent>('MouseEvent', ['stopPropagation']);
 
-    expect(event.stopPropagation).toHaveBeenCalled();
-    expect(emitSpy).toHaveBeenCalledTimes(1);
-  });
+      component.onDelete(event, trigger);
 
-  it('should emit edit even without event', () => {
-    const emitSpy = spyOn(component.edit, 'emit');
-
-    component.onEdit();
-
-    expect(emitSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('should emit delete even without event', () => {
-    const emitSpy = spyOn(component.delete, 'emit');
-
-    component.onDelete();
-
-    expect(emitSpy).toHaveBeenCalledTimes(1);
+      expect(event.stopPropagation).toHaveBeenCalled();
+      expect(emitSpy).toHaveBeenCalledTimes(1);
+      expect(menuClosed).toBeTrue();
+    });
   });
 
   // --------------------------------------------------

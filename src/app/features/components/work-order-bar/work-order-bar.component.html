@@ -17,15 +17,15 @@
       mat-icon-button
       class="work-order-action"
       [matMenuTriggerFor]="menu"
+      #menuTrigger="matMenuTrigger"
       (click)="$event.stopPropagation()"
       aria-label="Work order actions">
       <img class="hover-icon" src="hover.png" />
     </button>
 
     <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
-      <button mat-menu-item (click)="onEdit($event)">Edit</button>
-
-      <button mat-menu-item (click)="onDelete($event)">Delete</button>
+      <button mat-menu-item (click)="onEdit($event, menuTrigger)">Edit</button>
+      <button mat-menu-item (click)="onDelete($event, menuTrigger)">Delete</button>
     </mat-menu>
   </div>
 </div>
