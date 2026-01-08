@@ -44,3 +44,49 @@
     position: relative;
   }
 }
+
+.work-order-bar-create {
+  position: absolute;
+  z-index: 20;
+
+  min-width: 113px;
+  min-height: 38px;
+
+  pointer-events: none;
+
+  box-shadow: 0 4px 8px rgba(3, 9, 41, 0.15);
+
+  width: 113px;
+  height: 38px;
+  border: 1px solid rgba(195, 199, 255, 1);
+  border-radius: 8px;
+  background-color: rgba(101, 112, 255, 0.1);
+}
+
+.work-order-preview-label {
+  position: absolute;
+
+  /* Position ABOVE the pill */
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 6px 10px;
+  white-space: nowrap;
+
+  border-radius: 4px;
+  background-color: rgba(60, 64, 67, 0.9);
+  color: #ffffff;
+
+  font-family: global.$font-family-base;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+
+  pointer-events: none;
+  user-select: none;
+}

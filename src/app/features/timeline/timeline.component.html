@@ -22,7 +22,7 @@
       }
     </div>
 
-    <erp-timeline-grid class="timeline-right" [columns]="timelineService.columns()">
+    <erp-timeline-grid class="timeline-right" [columns]="timelineService.columns()" [workCenters]="workCenters()">
       @for (center of workCenters(); track center.docId; let index = $index) {
         <div class="timeline-row" (click)="onCreateAt(timelineService.xToDate($event.offsetX), center.docId)">
           @for (order of workOrdersForCenter(center); track order.docId) {

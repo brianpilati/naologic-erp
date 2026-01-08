@@ -916,6 +916,12 @@ Let's create the app-timeline-grid and merge all this code into one component. O
 
 ## Prompt
 
+In the timeilne-grid-rows, I need a way to display an empty word-order-bar when they hover on the timeline-grid-rows and not on a work-order-bar. They the user hovers, it creates the work-order-bar with an angular tool-top that says "Click to add dates".
+
+Which copmonent would be best suited to handle the click?
+
+<files>
+
 ## Prompt
 
 ## Prompt

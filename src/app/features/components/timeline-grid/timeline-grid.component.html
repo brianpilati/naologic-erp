@@ -1,4 +1,8 @@
-<div class="timeline-grid" (click)="onGridClick($event)">
+<div
+  class="timeline-grid"
+  (mousemove)="onMouseMove($event)"
+  (mouseleave)="hoverRowIndex.set(null)"
+  (click)="onGridClick()">
   <div class="timeline-grid-columns">
     @for (column of columns; track column.startDate.getTime()) {
       <div class="timeline-grid-column" [style.width.px]="column.widthPx">
@@ -11,5 +15,14 @@
 
   <div class="timeline-grid-rows">
     <ng-content />
+
+    @if (hoverRowIndex() !== null && hoverDate()) {
+      <div
+        class="work-order-bar-create"
+        [style.top.px]="hoverRowIndex()! * rowHeight + 18"
+        [style.left.px]="timelineService.dateToX(hoverDate()!)">
+        <span class="work-order-preview-label"> Click to add dates </span>
+      </div>
+    }
   </div>
 </div>
